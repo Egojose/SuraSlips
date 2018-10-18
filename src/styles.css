@@ -1,1 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    background-color: #228DC3;
+    padding: 30px;
+    text-align: center;
+    font-size: 35px;
+    color: white;
+}
+
+nav {
+    float: left;
+    width: 25%; 
+    background:#00A2BD;
+    padding: 20px;
+    min-height: 710px;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.link-menu{
+    color: white;
+    font-size: 25px;
+}
+
+article {
+    float: left;
+    padding: 20px;
+    width: 75%;
+    background-color: #FFFFFF;
+}
+
+section:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+footer {
+    background-color:#01338A;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    nav, article {
+        width: 100%;
+        height: auto;
+    }
+}
