@@ -1,3 +1,54 @@
-<p>
-  Aquí debe ir el componente para crear una solicitud
-</p>
+<div class="container">
+  <h2>Crear solicitud</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <div class="col-md-8">
+        <label>Asesor</label>
+        <span class="nombre-asesor">
+          <i class="fa fa-user"></i>
+          {{NombreAsesor}}
+        </span>
+      </div>
+      <div class="col-md-4">
+        <label>Fecha de solicitud</label>
+        <input formControlName="fechaSolicitud" type="text" placeholder="Fecha de solicitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fechaSolicitud.errors }" bsDatepicker>
+        <div *ngIf="submitted && f.fechaSolicitud.errors" class="invalid-feedback">
+          <div *ngIf="f.fechaSolicitud.errors.required">La fecha de solicitud es requerida</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-12">
+        <label>Cliente</label>
+        <select formControlName="cliente" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }">
+          <option>Cliente 1</option>
+          <option>Cliente 2</option>
+          <option>Cliente 3</option>
+          <option>Cliente 4</option>
+        </select>
+        <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
+            <div *ngIf="f.cliente.errors.required">Debe seleccionar un cliente</div>
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+          <label>Correo Electrónico</label>
+          <input type="text" formControlName="correoElectronico" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.correoElectronico.errors }" />
+          <div *ngIf="submitted && f.correoElectronico.errors" class="invalid-feedback">
+              <div *ngIf="f.correoElectronico.errors.required">El correo electrónico es requerido</div>
+              <div *ngIf="f.correoElectronico.errors.email">Debe ingresar un correo electrónico válido</div>
+          </div>
+        </div>
+      </div>
+
+    <div class="form-group">
+      <button [disabled]="loading" class="btn btn-primary">Crear solicitud</button>
+    </div>
+
+
+  </form>
+</div>
