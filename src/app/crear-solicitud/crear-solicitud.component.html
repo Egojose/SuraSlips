@@ -1,54 +1,206 @@
 <div class="container">
-  <h2>Crear solicitud</h2>
+
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <div class="col-md-8">
-        <label>Asesor</label>
-        <span class="nombre-asesor">
-          <i class="fa fa-user"></i>
-          {{NombreAsesor}}
-        </span>
-      </div>
-      <div class="col-md-4">
-        <label>Fecha de solicitud</label>
-        <input formControlName="fechaSolicitud" type="text" placeholder="Fecha de solicitud" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fechaSolicitud.errors }" bsDatepicker>
-        <div *ngIf="submitted && f.fechaSolicitud.errors" class="invalid-feedback">
-          <div *ngIf="f.fechaSolicitud.errors.required">La fecha de solicitud es requerida</div>
-        </div>
-      </div>
-    </div>
+    <fieldset>
 
-    <div class="form-group">
-      <div class="col-md-12">
-        <label>Cliente</label>
-        <select formControlName="cliente" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }">
-          <option>Cliente 1</option>
-          <option>Cliente 2</option>
-          <option>Cliente 3</option>
-          <option>Cliente 4</option>
-        </select>
-        <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
-            <div *ngIf="f.cliente.errors.required">Debe seleccionar un cliente</div>
-          </div>
-      </div>
-    </div>
+      <legend>Datos generales del SLIP</legend>
 
-    <div class="form-group">
-        <div class="col-md-12">
-          <label>Correo Electrónico</label>
-          <input type="text" formControlName="correoElectronico" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.correoElectronico.errors }" />
-          <div *ngIf="submitted && f.correoElectronico.errors" class="invalid-feedback">
-              <div *ngIf="f.correoElectronico.errors.required">El correo electrónico es requerido</div>
-              <div *ngIf="f.correoElectronico.errors.email">Debe ingresar un correo electrónico válido</div>
+      <div class='row'>
+
+        <div class='col-sm-4'>
+          <div class='form-group'>
+            <label for="creado-por">Creado por</label>
+            <div class="zona-usuario">
+              <label class="usuario-actual">{{nombreUsuario}}</label>
+            </div>
           </div>
         </div>
+
+        <div class='col-sm-4'>
+          <div class='form-group'>
+            <label for="fecha-creacion">Fecha de creación</label>
+            <input formControlName="fechaSolicitud" type="text" placeholder="Fecha de solicitud" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.fechaSolicitud.errors }" bsDatepicker>
+            <div *ngIf="submitted && f.fechaSolicitud.errors" class="invalid-feedback">
+              <div *ngIf="f.fechaSolicitud.errors.required">La fecha de solicitud es requerida</div>
+            </div>
+          </div>
+        </div>
+
+        <div class='col-sm-4'>
+          <div class='form-group'>
+            <label for="fecha-renovacion">Fecha de renovación</label>
+            <input formControlName="fechaRenovacion" type="text" placeholder="Fecha de renovación" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }" bsDatepicker>
+            <div *ngIf="submitted && f.fechaRenovacion.errors" class="invalid-feedback">
+              <div *ngIf="f.fechaRenovacion.errors.required">La fecha de renovación es requerida</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-    <div class="form-group">
-      <button [disabled]="loading" class="btn btn-primary">Crear solicitud</button>
-    </div>
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="cliente">Cliente</label>
+            <select formControlName="cliente" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }">
+              <option>Cliente 1</option>
+              <option>Cliente 2</option>
+              <option>Cliente 3</option>
+              <option>Cliente 4</option>
+            </select>
+            <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
+              <div *ngIf="f.cliente.errors.required">Debe seleccionar un cliente</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="tipo-slip">Tipo de slip</label>
+            <select formControlName="tipoSlip" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoSlip.errors }"
+              (change)="generarSlips($event.target.value)">
+              <option>Simple</option>
+              <option>Múltiple</option>
+            </select>
+            <div *ngIf="submitted && f.tipoSlip.errors" class="invalid-feedback">
+              <div *ngIf="f.tipoSlip.errors.required">Debe seleccionar un tipo de slip</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <fieldset>
+
+        <legend>SLIP</legend>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div *ngIf="!multipleSlips; else multipleSlipsContenido">
+                <table class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Tipo Gestión</th>
+                      <th>Responsable</th>
+                      <th>Correo</th>
+                      <th>Adjunto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let field of fieldArray; let i = index">
+                      <td>
+                        <select class="form-control">
+                          <option>Unidad Comercial</option>
+                          <option>Asesor</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input class="form-control" type="text" />
+                      </td>
+                      <td>
+                        <input class="form-control" type="text" />
+                      </td>
+                      <td>
+                        <input class="form-control" type="file">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <select class="form-control">
+                          <option>Unidad Comercial</option>
+                          <option>Asesor</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input class="form-control" type="text" id="newAttributeName" />
+                      </td>
+                      <td>
+                        <input class="form-control" type="text" id="newAttributePrice" />
+                      </td>
+                      <td>
+                        <input class="form-control" type="file">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ng-template #multipleSlipsContenido>
+                <div>
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Tipo Gestión</th>
+                        <th>Responsable</th>
+                        <th>Correo</th>
+                        <th>Adjunto</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let field of fieldArray; let i = index">
+                        <td>
+                          <select class="form-control">
+                            <option>Unidad Comercial</option>
+                            <option>Asesor</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input class="form-control" type="text" />
+                        </td>
+                        <td>
+                          <input class="form-control" type="text" />
+                        </td>
+                        <td>
+                          <input class="form-control" type="file">
+                        </td>
+                        <td>
+                          <button class="btn btn-default" type="button" (click)="deleteFieldValue(i)">Borrar</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <select class="form-control">
+                            <option>Unidad Comercial</option>
+                            <option>Asesor</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input class="form-control" type="text" id="newAttributeName" />
+                        </td>
+                        <td>
+                          <input class="form-control" type="text" id="newAttributePrice" />
+                        </td>
+                        <td>
+                          <input class="form-control" type="file">
+                        </td>
+                        <td>
+                          <button class="btn btn-default" type="button" (click)="addFieldValue()">Agregar</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </fieldset>
 
 
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">Enviar Slip</button>
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
   </form>
 </div>

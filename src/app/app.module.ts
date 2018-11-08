@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DataTablesModule } from 'angular-datatables';
 
 import { AppComponent } from './app.component';
 import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
@@ -11,6 +11,7 @@ import { EditarSolicitudComponent } from './editar-solicitud/editar-solicitud.co
 import { DescargarPlantillasComponent } from './descargar-plantillas/descargar-plantillas.component';
 import { MisSolicitudesComponent } from './mis-solicitudes/mis-solicitudes.component';
 import { MenuComponent } from './menu/menu.component';
+import { SPServicio } from './servicios/sp.servicio';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MenuComponent } from './menu/menu.component';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    DataTablesModule,
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       {path:'',redirectTo:'/mis-solicitudes',pathMatch:'full'},
@@ -33,7 +35,7 @@ import { MenuComponent } from './menu/menu.component';
       {path:'descargar-plantillas', component:DescargarPlantillasComponent}
     ])
   ],
-  providers: [],
+  providers: [SPServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

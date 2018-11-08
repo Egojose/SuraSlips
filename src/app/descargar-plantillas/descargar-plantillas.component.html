@@ -1,3 +1,10 @@
-<p>
-  Aquí debe ir el componente para descargar las plantillas
-</p>
+<div class="row">
+  <div *ngFor="let plantilla of plantillas" class="plantilla col-md-3" title="{{plantilla.descripcion}}" (click)="descargarArchivo(plantilla)">
+    <div class="card-counter info">
+      <i class="fa fa-file-word-o"></i>
+      <span class="count-numbers">{{plantilla.nombre}}</span>
+      <span class="count-name">Slip</span>
+    </div>
+  </div>
+
+</div>
