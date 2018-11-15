@@ -4,6 +4,10 @@ export const environment = {
   urlReltativa: '/sites/intranet/negocio/seguros/slips',
   listaDescargaPlantillas: "PlantillasSlips",
   bibliotecaPlantillas: "FormatosSlips",
+  listaTipoNegocio: "TipoNegocio",
+  listaEstadosPorTipoNegocio: "EstadosPorTipoNegocio",
+  listaTipoGestion: "TipoGestion",
+  listaTipoResponsables: "TipoResponsable"
 };
 
 

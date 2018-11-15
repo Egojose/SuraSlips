@@ -39,6 +39,26 @@ export class SPServicio {
         return respuesta;
     }
 
+    ObtenerTipoNegocio() {
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoNegocio).items.getAll());
+        return respuesta;
+    }
+
+    ObtenerEstadosPorTipoNegocio(tipoNegocioId: number) {
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaEstadosPorTipoNegocio).items.filter("TipoNegocioId eq " + tipoNegocioId).get());
+        return respuesta;
+    }
+
+    ObtenerTiposGestion(){
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoGestion).items.getAll());
+        return respuesta;
+    }
+
+    ObtenerTipoResponsables(){
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoResponsables).items.getAll());
+        return respuesta;
+    }
+
     ObtenerPlantillasDescargas() {
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaDescargaPlantillas).items.orderBy("OrdenPlantilla", true).getAll());
         return respuesta;

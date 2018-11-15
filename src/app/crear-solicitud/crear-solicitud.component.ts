@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../dominio/usuario';
+import { TipoNegocio } from '../dominio/tipoNegocio';
+import { SPServicio } from '../servicios/sp.servicio';
+import { Estado } from '../dominio/estado';
+import { TipoGestion } from '../dominio/tipoGestion';
+import { TipoResponsable } from '../dominio/tipoResponsable';
 
 @Component({
   selector: 'app-crear-solicitud',
@@ -12,36 +17,83 @@ export class CrearSolicitudComponent implements OnInit {
 
   usuarioActual: Usuario;
   nombreUsuario: string;
-
-  private fieldArray: Array<any> = [];
-  private newAttribute: any = {};
-
   registerForm: FormGroup;
-  multipleSlips = false;
+  tiposNegocio: TipoNegocio[] = [];
+  tiposGestion: TipoGestion[] = [];
+  tiposResponsable: TipoResponsable[] = [];
+  mostrarDivEstado = false;
+  estados: Estado[] = [];
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private servicio: SPServicio) {
     setTheme('bs4');
   }
 
-  addFieldValue() {
-    this.fieldArray.push(this.newAttribute)
-    this.newAttribute = {};
-}
-
-deleteFieldValue(index) {
-    this.fieldArray.splice(index, 1);
-}
-
   ngOnInit() {
-    
     this.RecuperarUsuario();
+    this.RegistrarFormulario();
+    this.ObtenerTipoNegocio();
+  }
 
+  RegistrarFormulario() {
     this.registerForm = this.formBuilder.group({
       fechaSolicitud: ['', Validators.required],
       fechaRenovacion: ['', Validators.required],
       cliente: ['', Validators.required],
-      tipoSlip: ['', Validators.required],
+      ddltipoNegocio: ['', Validators.required],
+      tipoGestion: ['', Validators.required],
+      responsable: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.email]],
+      tipoResponsable:['', Validators.required]
+    });
+  }
+
+  ObtenerTipoNegocio() {
+    this.servicio.ObtenerTipoNegocio().subscribe(
+      (Response) => {
+        this.tiposNegocio = TipoNegocio.fromJsonList(Response);
+        this.ObtenerTiposGestion();
+      }
+    )
+  }
+
+  ObtenerTiposGestion(){
+    this.servicio.ObtenerTiposGestion().subscribe(
+      (Response) => {
+        this.tiposGestion = TipoGestion.fromJsonList(Response);
+        this.ObtenerTiposResponsable();
+      }
+    )
+  }
+
+  ObtenerTiposResponsable(){
+    this.servicio.ObtenerTipoResponsables().subscribe(
+      (Response) => {
+        this.tiposResponsable = TipoResponsable.fromJsonList(Response);
+        this.EstablecerValoresFormularios();
+      }
+    )
+  }
+
+  mostrarEstados(tipoNegocioId){
+    this.mostrarDivEstado = true;
+    this.servicio.ObtenerEstadosPorTipoNegocio(tipoNegocioId).subscribe(
+      (Response) => {
+        this.estados = Estado.fromJsonList(Response);
+      }
+    )
+  }
+
+  EstablecerValoresFormularios() {
+    this.registerForm.setValue({
+      fechaSolicitud: new Date(),
+      fechaRenovacion: '',
+      cliente: '',
+      ddltipoNegocio: '',
+      tipoGestion: '',
+      responsable: '',
+      correo: '',
+      tipoResponsable: ''
     });
   }
 
@@ -50,26 +102,13 @@ deleteFieldValue(index) {
     this.nombreUsuario = this.usuarioActual.nombre;
   }
 
-  generarSlips(objeto){
-    console.log(objeto);
-
-    if(objeto == "Simple"){
-      this.multipleSlips = false;
-    }
-    if(objeto == "Múltiple"){
-      this.multipleSlips = true;
-    }
-  }
-
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
     this.submitted = true;
-
     if (this.registerForm.invalid) {
       return;
     }
-
     alert('SUCCESS!! :-)')
   }
 
