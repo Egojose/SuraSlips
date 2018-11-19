@@ -4,6 +4,8 @@ import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DataTablesModule } from 'angular-datatables';
+import { HttpClientModule } from '@angular/common/http';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { AppComponent } from './app.component';
 import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
@@ -12,6 +14,7 @@ import { DescargarPlantillasComponent } from './descargar-plantillas/descargar-p
 import { MisSolicitudesComponent } from './mis-solicitudes/mis-solicitudes.component';
 import { MenuComponent } from './menu/menu.component';
 import { SPServicio } from './servicios/sp.servicio';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -24,8 +27,11 @@ import { SPServicio } from './servicios/sp.servicio';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     ReactiveFormsModule,
     DataTablesModule,
+    AlertModule.forRoot(),
+    ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       {path:'',redirectTo:'/mis-solicitudes',pathMatch:'full'},

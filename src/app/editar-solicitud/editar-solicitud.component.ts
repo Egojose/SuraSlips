@@ -10,6 +10,6 @@ export class EditarSolicitudComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+   
   }
-
 }

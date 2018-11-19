@@ -32,16 +32,45 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
             <label for="cliente">Cliente</label>
-            <input formControlName="cliente" type="text" placeholder="Cliente" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
+            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
             <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
               <div *ngIf="f.cliente.errors.required">El cliente es requerido</div>
             </div>
           </div>
         </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <button type="button" (click)="buscarCliente(template)" class="buscar-cliente btn btn-primary">Buscar cliente</button>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="datos-clientes form-group">
+            <div class="cliente-nombre">
+              Nombre del cliente: 
+              <span>
+                {{nombreCliente}}
+              </span>
+            </div>
+            <div class="cliente-dni">
+              DNI del cliente: 
+              <span>
+                {{dniCliente}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
         <div class="col-sm-4">
           <div class="form-group">
             <label for="tipo-negocio">Tipo de negocio</label>
@@ -64,7 +93,22 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="tipo-negocio">Tipo de Slip</label>
+            <select formControlName="tipoSlip" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoSlip.errors }"
+              (change)="HabilitarMultiplesSlips($event.target.value);">
+              <option value="Simple" text="Simple" selected>Simple</option>
+              <option value="Múltiple" text="Múltiple">Múltiple</option>
+            </select>
+            <div *ngIf="submitted && f.tipoSlip.errors" class="invalid-feedback">
+              <div *ngIf="f.tipoSlip.errors.required">Debe seleccionar un tipo de Slip</div>
+            </div>
+          </div>
+        </div>
+
       </div>
+
       <div class="row">
         <div class="col-sm-3">
           <div class="form-group">
@@ -124,9 +168,24 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="form-group">
-          <button [disabled]="loading" class="btn btn-primary">Enviar Slip</button>
+          <button type="submit" class="btn btn-primary">Enviar Slip</button>
         </div>
       </div>
     </div>
   </form>
 </div>
+
+  <!-- Modal -->
+  <ng-template #template>
+      <div class="modal-header">
+          <h4 class="modal-title pull-left">{{tituloModal}}</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          {{mensajeModal}}
+      </div>
+  </ng-template>
+
+    
