@@ -1,5 +1,8 @@
 <div class="container">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="loading" *ngIf='loading'>
+    <img class="img-logo" src="/sites/intranet/negocio/seguros/slips/ImagenesSlips/aplicacion/loading.gif" alt="loading...">
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit(template)">
     <fieldset>
       <legend>Datos generales del SLIP</legend>
       <div class='row'>
@@ -14,18 +17,15 @@
         <div class='col-sm-4'>
           <div class='form-group'>
             <label for="fecha-creacion">Fecha de creación</label>
-            <input formControlName="fechaSolicitud" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fechaSolicitud.errors }"
-              bsDatepicker disabled>
-            <div *ngIf="submitted && f.fechaSolicitud.errors" class="invalid-feedback">
-              <div *ngIf="f.fechaSolicitud.errors.required">La fecha de solicitud es requerida</div>
-            </div>
+            <input formControlName="fechaSolicitud" type="text" class="form-control" bsDatepicker disabled>
           </div>
         </div>
         <div class='col-sm-4'>
           <div class='form-group'>
             <label for="fecha-renovacion">Fecha de renovación</label>
             <input formControlName="fechaRenovacion" type="text" placeholder="Fecha de renovación" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }" bsDatepicker>
+              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }" [minDate]="minDate" [maxDate]="maxDate"
+              #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
             <div *ngIf="submitted && f.fechaRenovacion.errors" class="invalid-feedback">
               <div *ngIf="f.fechaRenovacion.errors.required">La fecha de renovación es requerida</div>
             </div>
@@ -37,7 +37,8 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label for="cliente">Cliente</label>
-            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
+            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
             <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
               <div *ngIf="f.cliente.errors.required">El cliente es requerido</div>
             </div>
@@ -46,20 +47,21 @@
 
         <div class="col-sm-2">
           <div class="form-group">
-            <button type="button" (click)="buscarCliente(template)" class="buscar-cliente btn btn-primary">Buscar cliente</button>
+            <button type="button" (click)="buscarCliente(template)" class="buscar-cliente btn btn-primary">Buscar
+              cliente</button>
           </div>
         </div>
 
         <div class="col-sm-6">
           <div class="datos-clientes form-group">
             <div class="cliente-nombre">
-              Nombre del cliente: 
+              Nombre del cliente:
               <span>
                 {{nombreCliente}}
               </span>
             </div>
             <div class="cliente-dni">
-              DNI del cliente: 
+              DNI del cliente:
               <span>
                 {{dniCliente}}
               </span>
@@ -73,9 +75,23 @@
 
         <div class="col-sm-4">
           <div class="form-group">
+            <label for="tipo-slip">Tipo de Slip</label>
+            <select formControlName="tipoSlip" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoSlip.errors }"
+              (change)="HabilitarMultiplesSlips($event.target.value);">
+              <option value="Simple" text="Simple" selected>Simple</option>
+              <option value="Múltiple" text="Múltiple">Múltiple</option>
+            </select>
+            <div *ngIf="submitted && f.tipoSlip.errors" class="invalid-feedback">
+              <div *ngIf="f.tipoSlip.errors.required">Debe seleccionar un tipo de Slip</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
             <label for="tipo-negocio">Tipo de negocio</label>
             <select formControlName="ddltipoNegocio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ddltipoNegocio.errors }"
-              (change)="mostrarEstados($event.target.value);">
+              (change)="mostrarEstados($event);">
               <option *ngFor="let tipoNegocio of tiposNegocio" [value]="tipoNegocio.id" [text]="tipoNegocio.title">
                 {{tipoNegocio.title}}
               </option>
@@ -89,24 +105,13 @@
           <div id="zonaEstado" [hidden]="!mostrarDivEstado" class="form-group">
             <label for="estado">Estado</label>
             <div class="checkbox" *ngFor="let estado of estados">
-              <label><input name="grupoEstados" type="checkbox" value="{{estado.id}}">{{estado.title}}</label>
+              <label><input name="grupoEstados" type="checkbox" (change)='seleccionarEstado(estado)' [checked]="estado.seleccionado">{{estado.title}}</label>
+            </div>
+            <div *ngIf="submitted && !validarSeleccionEstado()" class="invalid-feedback">
+              <div>Debe seleccionar un estado</div>
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="tipo-negocio">Tipo de Slip</label>
-            <select formControlName="tipoSlip" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoSlip.errors }"
-              (change)="HabilitarMultiplesSlips($event.target.value);">
-              <option value="Simple" text="Simple" selected>Simple</option>
-              <option value="Múltiple" text="Múltiple">Múltiple</option>
-            </select>
-            <div *ngIf="submitted && f.tipoSlip.errors" class="invalid-feedback">
-              <div *ngIf="f.tipoSlip.errors.required">Debe seleccionar un tipo de Slip</div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <div class="row">
@@ -114,7 +119,7 @@
           <div class="form-group">
             <label for="tipo-gestion">Tipo de Gestión</label>
             <select formControlName="tipoGestion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoGestion.errors }">
-              <option *ngFor="let tipoGestion of tiposGestion" [value]="tipoGestion.id" [text]="tipoGestion.title">
+              <option *ngFor="let tipoGestion of tiposGestion" [value]="tipoGestion.title" [text]="tipoGestion.title">
                 {{tipoGestion.title}}
               </option>
             </select>
@@ -142,27 +147,57 @@
             </div>
           </div>
         </div>
+
         <div class="col-sm-3">
           <div class="form-group">
-            <label for="tipo-responsable">Tipo de responsable</label>
+            <label for="correo-2">Correo electrónico 2</label>
+            <input formControlName="correo2" type="text" placeholder="Correo electrónico 2" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.correo2.errors }" />
+            <div *ngIf="submitted && f.correo2.errors" class="invalid-feedback">
+                <div *ngIf="f.correo2.errors.email">Debe escribir un correo válido</div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="tipo-responsable">Con copia a</label>
             <select formControlName="tipoResponsable" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoResponsable.errors }">
-              <option *ngFor="let tipoResponsable of tiposResponsable" [value]="tipoResponsable.id" [text]="tipoResponsable.title">
+              <option *ngFor="let tipoResponsable of tiposResponsable" [value]="tipoResponsable.title" [text]="tipoResponsable.title">
                 {{tipoResponsable.title}}
               </option>
             </select>
             <div *ngIf="submitted && f.tipoResponsable.errors" class="invalid-feedback">
-              <div *ngIf="f.tipoResponsable.errors.required">Debe seleccionar un tipo de responsable</div>
+              <div *ngIf="f.tipoResponsable.errors.required">Debe seleccionar a quien va a copiar</div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label for="tipo-responsable">Adjuntar SLIP</label>
-            <input class="form-control" type="file">
+
+        <div class="col-sm-4">
+          <label for="tipo-solucion">Solución</label>
+          <select formControlName="solucion" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.solucion.errors }">
+            <option *ngFor="let categoria of categorias" [value]="categoria.title" [text]="categoria.title">
+              {{categoria.title}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.solucion.errors" class="invalid-feedback">
+            <div *ngIf="f.solucion.errors.required">Debe seleccionar una solución o categoría</div>
           </div>
         </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="adjunto">Adjuntar SLIP</label>
+            <input formControlName="adjunto" class="form-control" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              (change)="validarExtensionArchivo($event, template)" [ngClass]="{ 'is-invalid': submitted && f.adjunto.errors }">
+            <div *ngIf="submitted && f.adjunto.errors" class="invalid-feedback">
+              <div *ngIf="f.adjunto.errors.required">Debe seleccionar un archivo</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </fieldset>
     <div class="row">
@@ -175,17 +210,15 @@
   </form>
 </div>
 
-  <!-- Modal -->
-  <ng-template #template>
-      <div class="modal-header">
-          <h4 class="modal-title pull-left">{{tituloModal}}</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      <div class="modal-body">
-          {{mensajeModal}}
-      </div>
-  </ng-template>
-
-    
+<!-- Modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{tituloModal}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{mensajeModal}}
+  </div>
+</ng-template>

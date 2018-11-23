@@ -135,6 +135,22 @@ footer {
       font-size: larger;
   }
 
+  .loading {
+
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    
+    
+
+}
+
   input[type=file] {
     cursor: pointer;
     height: 47px;

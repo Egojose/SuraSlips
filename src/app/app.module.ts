@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -33,6 +33,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    DatepickerModule.forRoot(),
     RouterModule.forRoot([
       {path:'',redirectTo:'/mis-solicitudes',pathMatch:'full'},
       {path:'mis-solicitudes',component:MisSolicitudesComponent},

@@ -1,10 +1,10 @@
-export class Estado {
-    constructor(public title: string, public tiponegocioId: number, public id: number, public seleccionado?:boolean) {
+export class Categoria{
+    constructor(public title: string, public id: number){
 
     }
 
     public static fromJson(element: any) {
-        return new Estado(element.Title, element.TipoNegocioId, element.ID);
+        return new Categoria(element.Title, element.ID);
     }
 
     public static fromJsonList(elements: any) {
@@ -14,5 +14,4 @@ export class Estado {
         }
         return list;
     }
-
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
 import { default as pnp, ItemAddResult, CamlQuery } from 'sp-pnp-js';
 import { environment } from '../../environments/environment';
+import { Slip } from '../dominio/slip';
 
 @Injectable()
 export class SPServicio {
@@ -49,6 +50,26 @@ export class SPServicio {
         return respuesta;
     }
 
+    agregarSlipDocumento(sufijo: string, documento: File){
+        return this.obtenerConfiguracion().web.getFolderByServerRelativeUrl(environment.urlReltativa + environment.bibliotecaSlips).files.add(sufijo + "-" + documento.name, documento, true);
+    }
+
+    actualizarSlipDocumento(slip: Slip, documentoId: number) {
+        return this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(documentoId).update({
+            FechaRenovacion: slip.fechaRenovacion,
+            DNICliente: slip.dniCliente,
+            Cliente: slip.nombreCliente,
+            TipoGestion: slip.tipoGestion,
+            Responsable: slip.responsable,
+            TipoNegocio: slip.tipoNegocio,
+            Estado: slip.estado,
+            Correo: slip.correo1,
+            Correo2: slip.correo2,
+            ConCopiaA: slip.copiaA,
+            Solucion: slip.solucion
+        });
+    }
+
     ObtenerTiposGestion(){
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoGestion).items.getAll());
         return respuesta;
@@ -69,13 +90,17 @@ export class SPServicio {
         return respuesta;
     }
 
+    ObtenerCategorias(){
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaCategorias).items.orderBy("Title", true).getAll());
+        return respuesta;
+    }
+
     ObtenerElementosPorCaml(nombreLista: string, consulta: string) {
         const xml = consulta;
         const q: CamlQuery = {
             ViewXml: xml,
         };
-        let respuesta = from(this.ObtenerConfiguracionConPost().web.lists.getByTitle(nombreLista).getItemsByCAMLQuery(q));
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(nombreLista).getItemsByCAMLQuery(q));
         return respuesta;
     }
-
 }
