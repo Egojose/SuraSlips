@@ -1,6 +1,8 @@
 export class Slip {
     constructor(
+        public titulo: string,
         public fechaRenovacion: Date,
+        public tipoIdentificacionCliente: string,
         public dniCliente: string,
         public nombreCliente: string,
         public tipoNegocio: string,
@@ -9,13 +11,15 @@ export class Slip {
         public responsable: string,
         public correo1: string,
         public correo2: string,
-        public copiaA: string,
-        public solucion: string,
+        public correo3: string,
+        public formatoSLIP: string,
         public id?: number) { }
 
     public static fromJson(element: any) {
         return new Slip(
+            element.Title,
             element.FechaRenovacion,
+            element.TipoIdentificacionCliente,
             element.DNICliente,
             element.Cliente,
             element.TipoNegocio,
@@ -24,8 +28,8 @@ export class Slip {
             element.Responsable,
             element.Correo,
             element.Correo2,
-            element.ConCopiaA,
-            element.Solucion,
+            element.Correo3,
+            element.FormatoSLIP,
             element.ID);
     }
 

@@ -34,10 +34,25 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-4">
+
+          <div class="col-sm-3">
+              <div class="form-group">
+                <label class="label-tipo-identificacion-cliente" for="tipo-identificacion-cliente">Tipo de identificación del cliente</label>
+                <select formControlName="tipoIdentificacionCliente" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoIdentificacionCliente.errors }">
+                  <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                  <option value="Nit">Nit</option>
+                </select>
+                <div *ngIf="submitted && f.tipoIdentificacionCliente.errors" class="invalid-feedback">
+                  <div *ngIf="f.tipoIdentificacionCliente.errors.required">El tipo de identificación del cliente es
+                    requerido</div>
+                </div>
+              </div>
+            </div>
+
+        <div class="col-sm-3">
           <div class="form-group">
             <label for="cliente">Cliente</label>
-            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control"
+            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control"  maxlength="15" numbersOnly
               [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
             <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
               <div *ngIf="f.cliente.errors.required">El cliente es requerido</div>
@@ -52,18 +67,11 @@
           </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <div class="datos-clientes form-group">
             <div class="cliente-nombre">
-              Nombre del cliente:
               <span>
                 {{nombreCliente}}
-              </span>
-            </div>
-            <div class="cliente-dni">
-              DNI del cliente:
-              <span>
-                {{dniCliente}}
               </span>
             </div>
           </div>
@@ -151,10 +159,11 @@
         <div class="col-sm-3">
           <div class="form-group">
             <label for="correo-2">Correo electrónico 2</label>
-            <input formControlName="correo2" type="text" placeholder="Correo electrónico 2" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.correo2.errors }" />
+            <input formControlName="correo2" type="text" placeholder="Correo electrónico 2" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.correo2.errors }" />
             <div *ngIf="submitted && f.correo2.errors" class="invalid-feedback">
-                <div *ngIf="f.correo2.errors.email">Debe escribir un correo válido</div>
-              </div>
+              <div *ngIf="f.correo2.errors.email">Debe escribir un correo válido</div>
+            </div>
           </div>
         </div>
 
@@ -163,38 +172,23 @@
 
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="tipo-responsable">Con copia a</label>
-            <select formControlName="tipoResponsable" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoResponsable.errors }">
-              <option *ngFor="let tipoResponsable of tiposResponsable" [value]="tipoResponsable.title" [text]="tipoResponsable.title">
-                {{tipoResponsable.title}}
-              </option>
-            </select>
-            <div *ngIf="submitted && f.tipoResponsable.errors" class="invalid-feedback">
-              <div *ngIf="f.tipoResponsable.errors.required">Debe seleccionar a quien va a copiar</div>
+              <label for="correo-3">Correo electrónico 3</label>
+              <input formControlName="correo3" type="text" placeholder="Correo electrónico 3" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.correo3.errors }" />
+              <div *ngIf="submitted && f.correo3.errors" class="invalid-feedback">
+                <div *ngIf="f.correo3.errors.email">Debe escribir un correo válido</div>
+              </div>
             </div>
-          </div>
         </div>
 
         <div class="col-sm-4">
-          <label for="tipo-solucion">Solución</label>
-          <select formControlName="solucion" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.solucion.errors }">
-            <option *ngFor="let categoria of categorias" [value]="categoria.title" [text]="categoria.title">
-              {{categoria.title}}
+          <label for="tipo-formato">Formato de SLIP</label>
+          <select formControlName="tipoFormato" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoFormato.errors }">
+            <option *ngFor="let formato of formatos" [value]="formato.FieldValuesAsText.FileRef" [text]="formato.name">{{formato.name}}
             </option>
           </select>
-          <div *ngIf="submitted && f.solucion.errors" class="invalid-feedback">
-            <div *ngIf="f.solucion.errors.required">Debe seleccionar una solución o categoría</div>
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="adjunto">Adjuntar SLIP</label>
-            <input formControlName="adjunto" class="form-control" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-              (change)="validarExtensionArchivo($event, template)" [ngClass]="{ 'is-invalid': submitted && f.adjunto.errors }">
-            <div *ngIf="submitted && f.adjunto.errors" class="invalid-feedback">
-              <div *ngIf="f.adjunto.errors.required">Debe seleccionar un archivo</div>
-            </div>
+          <div *ngIf="submitted && f.tipoFormato.errors" class="invalid-feedback">
+            <div *ngIf="f.tipoFormato.errors.required">Debe seleccionar un tipo de formato</div>
           </div>
         </div>
 

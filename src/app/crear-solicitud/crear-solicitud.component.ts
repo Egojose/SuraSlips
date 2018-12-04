@@ -6,13 +6,14 @@ import { TipoNegocio } from '../dominio/tipoNegocio';
 import { SPServicio } from '../servicios/sp.servicio';
 import { Estado } from '../dominio/estado';
 import { TipoGestion } from '../dominio/tipoGestion';
-import { TipoResponsable } from '../dominio/tipoResponsable';
 import { SuraServicio } from '../servicios/sura.servicio';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import { Categoria } from '../dominio/categoria';
 import { Slip } from '../dominio/slip';
+import { Formato } from '../dominio/formato';
+import { ItemAddResult } from 'sp-pnp-js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-solicitud',
@@ -34,8 +35,7 @@ export class CrearSolicitudComponent implements OnInit {
   registerForm: FormGroup;
   tiposNegocio: TipoNegocio[] = [];
   tiposGestion: TipoGestion[] = [];
-  tiposResponsable: TipoResponsable[] = [];
-  categorias: Categoria[] = [];
+  formatos: Formato[] = [];
   mostrarDivEstado = false;
   estados: Estado[] = [];
   nombreCliente: string;
@@ -50,7 +50,8 @@ export class CrearSolicitudComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private servicio: SPServicio,
     private servicioClientes: SuraServicio,
-    private servicioModal: BsModalService) {
+    private servicioModal: BsModalService, 
+    private router: Router) {
     setTheme('bs4');
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -74,16 +75,16 @@ export class CrearSolicitudComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       fechaSolicitud: [''],
       fechaRenovacion: ['', Validators.required],
+      tipoIdentificacionCliente: ['', Validators.required],
       cliente: ['', Validators.required],
       ddltipoNegocio: ['', Validators.required],
       tipoGestion: ['', Validators.required],
       responsable: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       correo2: ['', Validators.email],
-      tipoResponsable: ['', Validators.required],
+      correo3: ['', Validators.email],
       tipoSlip: ['', Validators.required],
-      solucion: ['', Validators.required],
-      adjunto: [null, Validators.required]
+      tipoFormato: ['', Validators.required]
     });
   }
 
@@ -102,7 +103,6 @@ export class CrearSolicitudComponent implements OnInit {
       (Response) => {
         this.tiposNegocio = TipoNegocio.fromJsonList(Response);
         this.ObtenerTiposGestion();
-
       }
     )
   }
@@ -111,25 +111,17 @@ export class CrearSolicitudComponent implements OnInit {
     this.servicio.ObtenerTiposGestion().subscribe(
       (Response) => {
         this.tiposGestion = TipoGestion.fromJsonList(Response);
-        this.ObtenerTiposResponsable();
+        this.ObtenerFormatosSlips();
       }
     )
   }
 
-  ObtenerTiposResponsable() {
-    this.servicio.ObtenerTipoResponsables().subscribe(
+  ObtenerFormatosSlips(){
+    this.servicio.ObtenerFormatosSlips().subscribe(
       (Response) => {
-        this.tiposResponsable = TipoResponsable.fromJsonList(Response);
-        this.ObtenerCategorias();
-      }
-    )
-  }
-
-  ObtenerCategorias() {
-    this.servicio.ObtenerCategorias().subscribe(
-      (Response) => {
-        this.categorias = Categoria.fromJsonList(Response);
+        this.formatos = Formato.fromJsonList(Response);
         this.EstablecerValoresFormularios();
+        this.loading = false;
       }
     )
   }
@@ -164,16 +156,16 @@ export class CrearSolicitudComponent implements OnInit {
     this.registerForm.setValue({
       fechaSolicitud: new Date(),
       fechaRenovacion: '',
+      tipoIdentificacionCliente: '',
       cliente: '',
       ddltipoNegocio: '',
       tipoGestion: '',
       responsable: '',
       correo: '',
       correo2: '',
-      tipoResponsable: '',
+      correo3:'',
       tipoSlip: '',
-      solucion: '',
-      adjunto: ''
+      tipoFormato: ''
     });
     this.loading = false;
   }
@@ -183,11 +175,24 @@ export class CrearSolicitudComponent implements OnInit {
   }
 
   buscarCliente(template: TemplateRef<any>) {
+    let tipoIdentificacionCliente = this.registerForm.controls["tipoIdentificacionCliente"].value;
     let dniCliente = this.registerForm.controls["cliente"].value;
-    if (dniCliente != "") {
-      this.obtenerDatosCliente(dniCliente, template);
+    if (tipoIdentificacionCliente != "" && dniCliente != "") {
+      let dniBuscar;
+      if(tipoIdentificacionCliente == "Cédula de ciudadanía"){
+        dniBuscar = "C" + dniCliente;
+      }
+      if(tipoIdentificacionCliente == "Nit"){
+        dniBuscar = "A" + dniCliente;
+      }
+      this.obtenerDatosCliente(dniBuscar, template);
     } else {
-      this.mostrarAlerta("DNI está vacío", "Debes escribir el DNI del cliente a buscar", template);
+      if(tipoIdentificacionCliente == "")
+      {
+        this.mostrarAlerta("Tipo de identificación del cliente está vacío", "Debes de seleccionar un tipo de identificación para poder buscar el cliente", template);
+      }else{
+        this.mostrarAlerta("DNI está vacío", "Debes escribir el DNI del cliente a buscar", template);
+      }
     }
   }
 
@@ -238,29 +243,6 @@ export class CrearSolicitudComponent implements OnInit {
     this.modalRef = this.servicioModal.show(template);
   }
 
-  ValidacionArchivo(name: String) {
-    var ext = name.substring(name.lastIndexOf('.') + 1);
-    if (ext.toLowerCase() == 'docx') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-
-  validarExtensionArchivo(evento, template: TemplateRef<any>) {
-    if (evento.target.files && evento.target.files[0]) {
-      let files = evento.target.files;
-      if (!this.ValidacionArchivo(files[0].name)) {
-        this.mostrarAlerta("Formato no válido", "Este formato no es válido, por favor adjunte un formato .docx", template);
-        evento.srcElement.value = null;
-      }
-      this.documento = files[0];
-    } else {
-      evento.srcElement.value = null;
-    }
-  }
-
   onSubmit(template: TemplateRef<any>) {
     this.submitted = true;
     if (this.registerForm.invalid) {
@@ -270,8 +252,11 @@ export class CrearSolicitudComponent implements OnInit {
   }
 
   guardarSlip(template: TemplateRef<any>) {
+
+    this.loading = true;
     let valorFechaRenovacion = this.registerForm.controls["fechaRenovacion"].value;
-    let valorCliente = this.registerForm.controls["cliente"].value;
+    let valorTipoIdentificacionCliente =  this.registerForm.controls["tipoIdentificacionCliente"].value;
+    let valorCliente =  this.registerForm.controls["cliente"].value;
     let valorLabelCliente = this.nombreCliente;
     let valorDniCliente = this.dniCliente;
     let valorTipoSlip = this.registerForm.controls["tipoSlip"].value;
@@ -281,41 +266,25 @@ export class CrearSolicitudComponent implements OnInit {
     let valorResponsable = this.registerForm.controls["responsable"].value;
     let valorCorreo = this.registerForm.controls["correo"].value;
     let valorCorreo2 = this.registerForm.controls["correo2"].value;
-    let valorConCopiaA = this.registerForm.controls["tipoResponsable"].value;
-    let valorSolucion = this.registerForm.controls["solucion"].value;
-    let sufijoArchivo = this.generarllaveDocumento();
-    this.slipGuardar = new Slip(valorFechaRenovacion, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorConCopiaA, valorSolucion);
+    let valorCorreo3 = this.registerForm.controls["correo3"].value;
+    let valorFormatoSlip = this.registerForm.controls["tipoFormato"].value;
+    let identificadorSlip = "SLIP-" + this.generarllaveDocumento();
+    this.slipGuardar = new Slip(identificadorSlip, valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip);
 
-    this.loading = true;
-    this.servicio.agregarSlipDocumento(sufijoArchivo, this.documento).then(
-      (respuesta) => {
-        this.obtenerItemBiblioteca(respuesta, template);
-      }, error => {
-        console.log(error);
-      }
-    );
-  }
-
-  obtenerItemBiblioteca(respuesta, template: TemplateRef<any>) {
-    respuesta.file.getItem("ID").then(
-      (item) => {
-        this.actualizarPropiedadesDocumento(item, template);
-      }, error => {
-        console.log(error);
-      }
-    );
-  }
-
-  actualizarPropiedadesDocumento(item, template: TemplateRef<any>) {
-    this.servicio.actualizarSlipDocumento(this.slipGuardar, item["ID"]).then(
-      (respuesta) => {
-        this.mostrarAlertaGuardado(template);
-        this.limpiarFormulario();
-        this.loading = false;
-      }, error => {
-        console.log(error);
-      }
-    );
+    if(valorLabelCliente == ""){
+      this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);
+    }else{
+      this.servicio.agregarSLIPinformacion(this.slipGuardar).then(
+        (iar: ItemAddResult)=>{
+          this.mostrarAlerta("Slip fue guardado", "El slip fue guardado con éxito, en breve le llegará una notificación", template);
+          this.loading = false;
+          this.router.navigate(['/mmis-solicitudes']);
+        },err=>{
+          alert('Error en la creación del SLIP!!');
+        }
+      )
+      
+    }
   }
 
   mostrarAlertaGuardado(template: TemplateRef<any>): any {

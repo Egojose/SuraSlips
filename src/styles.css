@@ -146,9 +146,6 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-    
-    
-
 }
 
   input[type=file] {
@@ -181,6 +178,15 @@ footer {
 
   .datos-clientes{
       margin-top: 30px;
+  }
+
+  .cliente-nombre{
+    font-size: x-large;
+    margin-top: 34px;
+  }
+
+  .label-tipo-identificacion-cliente{
+      margin-right: -17px;
   }
 
 

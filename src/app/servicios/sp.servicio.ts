@@ -54,19 +54,20 @@ export class SPServicio {
         return this.obtenerConfiguracion().web.getFolderByServerRelativeUrl(environment.urlReltativa + environment.bibliotecaSlips).files.add(sufijo + "-" + documento.name, documento, true);
     }
 
-    actualizarSlipDocumento(slip: Slip, documentoId: number) {
-        return this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(documentoId).update({
-            FechaRenovacion: slip.fechaRenovacion,
-            DNICliente: slip.dniCliente,
+    agregarSLIPinformacion(slip: Slip){
+        return this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlipsAuxiliar).items.add({
+            Title:slip.titulo,
             Cliente: slip.nombreCliente,
+            DNICliente: slip.dniCliente,
+            FechaRenovacion: slip.fechaRenovacion,
+            TipoNegocio: slip.tipoNegocio,
+            EstadoSlip: slip.estado,
             TipoGestion: slip.tipoGestion,
             Responsable: slip.responsable,
-            TipoNegocio: slip.tipoNegocio,
-            Estado: slip.estado,
-            Correo: slip.correo1,
+            Correo1: slip.correo1,
             Correo2: slip.correo2,
-            ConCopiaA: slip.copiaA,
-            Solucion: slip.solucion
+            Correo3: slip.correo3,
+            FormatoSLIP: slip.formatoSLIP
         });
     }
 
@@ -92,6 +93,11 @@ export class SPServicio {
 
     ObtenerCategorias(){
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaCategorias).items.orderBy("Title", true).getAll());
+        return respuesta;
+    }
+
+    ObtenerFormatosSlips(){
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaPlantillas).items.select("FieldValuesAsText/FileRef", "Title", "ID").expand("FieldValuesAsText").get());
         return respuesta;
     }
 

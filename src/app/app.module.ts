@@ -15,6 +15,7 @@ import { MisSolicitudesComponent } from './mis-solicitudes/mis-solicitudes.compo
 import { MenuComponent } from './menu/menu.component';
 import { SPServicio } from './servicios/sp.servicio';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NumberDirective } from './directivas/numbers-only.directive';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     EditarSolicitudComponent,
     DescargarPlantillasComponent,
     MisSolicitudesComponent,
-    MenuComponent
+    MenuComponent,
+    NumberDirective
   ],
   imports: [
     BrowserModule,
