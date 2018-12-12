@@ -1,48 +1,53 @@
-<table datatable id="example" class="table table-striped table-bordered" style="width:100%">
-  <thead>
-    <tr>
-      <th scope="col">Cliente</th>
-      <th scope="col">Fecha de solicitud</th>
-      <th scope="col">Días Transcurridos</th>
-      <th scope="col">Estado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Luis Alejandro Soto Bedoya</th>
-      <td>10/08/2018</td>
-      <td>4</td>
-      <td>Abierta</td>
-    </tr>
-    <tr>
-      <th scope="row">David Álvarez</th>
-      <td>10/08/2018</td>
-      <td>4</td>
-      <td>Cerrada</td>
-    </tr>
-    <tr>
-      <th scope="row">Juan Esteban Valencia</th>
-      <td>10/08/2018</td>
-      <td>4</td>
-      <td>Abierta</td>
-    </tr>
-    <tr>
-      <th scope="row">Eduardo Luis Perea Monsalve</th>
-      <td>10/08/2018</td>
-      <td>4</td>
-      <td>Abierta</td>
-    </tr>
-    <tr>
-      <th scope="row">Gladis Bedoya Valencia</th>
-      <td>10/08/2018</td>
-      <td>4</td>
-      <td>Cerrada</td>
-    </tr>
-    <tr>
-      <th scope="row">Wilson Montoya Lopez</th>
-      <td>10/08/2018</td>
-      <td>4</td>
-      <td>En Trámite</td>
-    </tr>
-  </tbody>
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar por cualquier palabra">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="nombreCliente">
+    <th mat-header-cell *matHeaderCellDef> Cliente </th>
+    <td mat-cell *matCellDef="let element"> {{element.nombreCliente}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fechaCreacion">
+    <th mat-header-cell *matHeaderCellDef> Fecha de creación </th>
+    <td mat-cell *matCellDef="let element"> {{element.fechaCreacion}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fechaRenovacion">
+    <th mat-header-cell *matHeaderCellDef> Fecha de Renovación </th>
+    <td mat-cell *matCellDef="let element"> {{element.fechaRenovacion}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="diasTranscurridos">
+    <th mat-header-cell *matHeaderCellDef> Días transcurridos </th>
+    <td mat-cell *matCellDef="let element"> {{element.diasTranscurridos}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipoNegocio">
+    <th mat-header-cell *matHeaderCellDef> Tipo de negocio </th>
+    <td mat-cell *matCellDef="let element"> {{element.tipoNegocio}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef> Estado </th>
+    <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="menu">
+    <th mat-header-cell *matHeaderCellDef> Menú Acciones </th>
+    <td mat-cell *matCellDef="let element">
+        <button class="btn btn primary" mat-button [matMenuTriggerFor]="menu">Menu</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Editar documento Slip</button>
+          <button mat-menu-item>Editar propiedades Slip</button>
+          <button mat-menu-item>Enviar al cliente</button>
+          <button mat-menu-item>Reasignar Slip</button>
+          <button mat-menu-item>Cerrar slip</button>
+        </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

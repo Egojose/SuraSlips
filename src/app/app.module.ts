@@ -6,6 +6,7 @@ import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
@@ -16,6 +17,7 @@ import { MenuComponent } from './menu/menu.component';
 import { SPServicio } from './servicios/sp.servicio';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NumberDirective } from './directivas/numbers-only.directive';
+import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,12 @@ import { NumberDirective } from './directivas/numbers-only.directive';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     DataTablesModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),

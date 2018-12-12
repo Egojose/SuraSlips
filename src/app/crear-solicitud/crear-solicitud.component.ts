@@ -269,7 +269,7 @@ export class CrearSolicitudComponent implements OnInit {
     let valorCorreo3 = this.registerForm.controls["correo3"].value;
     let valorFormatoSlip = this.registerForm.controls["tipoFormato"].value;
     let identificadorSlip = "SLIP-" + this.generarllaveDocumento();
-    this.slipGuardar = new Slip(identificadorSlip, valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip);
+    this.slipGuardar = new Slip(identificadorSlip, new Date(), valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip);
 
     if(valorLabelCliente == ""){
       this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);
@@ -278,7 +278,7 @@ export class CrearSolicitudComponent implements OnInit {
         (iar: ItemAddResult)=>{
           this.mostrarAlerta("Slip fue guardado", "El slip fue guardado con éxito, en breve le llegará una notificación", template);
           this.loading = false;
-          this.router.navigate(['/mmis-solicitudes']);
+          this.router.navigate(['/mis-solicitudes']);
         },err=>{
           alert('Error en la creación del SLIP!!');
         }
