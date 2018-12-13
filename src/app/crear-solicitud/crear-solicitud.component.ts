@@ -83,7 +83,6 @@ export class CrearSolicitudComponent implements OnInit {
       correo: ['', [Validators.required, Validators.email]],
       correo2: ['', Validators.email],
       correo3: ['', Validators.email],
-      tipoSlip: ['', Validators.required],
       tipoFormato: ['', Validators.required]
     });
   }
@@ -164,14 +163,9 @@ export class CrearSolicitudComponent implements OnInit {
       correo: '',
       correo2: '',
       correo3:'',
-      tipoSlip: '',
       tipoFormato: ''
     });
     this.loading = false;
-  }
-
-  HabilitarMultiplesSlips(objeto) {
-
   }
 
   buscarCliente(template: TemplateRef<any>) {
@@ -259,7 +253,6 @@ export class CrearSolicitudComponent implements OnInit {
     let valorCliente =  this.registerForm.controls["cliente"].value;
     let valorLabelCliente = this.nombreCliente;
     let valorDniCliente = this.dniCliente;
-    let valorTipoSlip = this.registerForm.controls["tipoSlip"].value;
     let valorTipoNegocio = this.tipoNegocio;
     let valorEstado = this.obtenerEstadoSeleccionado();
     let valorTipoGestion = this.registerForm.controls["tipoGestion"].value;
@@ -289,10 +282,6 @@ export class CrearSolicitudComponent implements OnInit {
 
   mostrarAlertaGuardado(template: TemplateRef<any>): any {
     this.mostrarAlerta("Slip Guardado", "El slip fue guardado correctamente, lo puedes observar en mis solicitudes", template);
-  }
-
-  limpiarFormulario(): any {
-    this.EstablecerValoresFormularios();
   }
 
   generarllaveDocumento(): string {

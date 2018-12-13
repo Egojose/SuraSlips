@@ -39,8 +39,9 @@
     <td mat-cell *matCellDef="let element">
         <button class="btn btn primary" mat-button [matMenuTriggerFor]="menu">Menu</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>Editar documento Slip</button>
-          <button mat-menu-item>Editar propiedades Slip</button>
+          <button mat-menu-item >Editar documento Slip</button>
+          <button mat-menu-item (click)="editarPropiedadesSlip(element)">Editar propiedades Slip</button>
+          <button mat-menu-item>Ver histórico</button>
           <button mat-menu-item>Enviar al cliente</button>
           <button mat-menu-item>Reasignar Slip</button>
           <button mat-menu-item>Cerrar slip</button>

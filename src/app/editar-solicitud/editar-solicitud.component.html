@@ -1,3 +1,204 @@
-<p>
-  Aquí debe ir el componente para editar una solicitud
-</p>
+<div class="container">
+  <div class="loading" *ngIf='loading'>
+    <img class="img-logo" src="/sites/intranet/negocio/seguros/slips/ImagenesSlips/aplicacion/loading.gif" alt="loading...">
+  </div>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit(template)">
+    <fieldset>
+      <legend>Datos generales del SLIP</legend>
+      <div class='row'>
+        <div class='col-sm-4'>
+          <div class='form-group'>
+            <label for="creado-por">Creado por</label>
+            <div class="zona-usuario">
+              <label class="usuario-actual">{{nombreUsuario}}</label>
+            </div>
+          </div>
+        </div>
+        <div class='col-sm-4'>
+          <div class='form-group'>
+            <label for="fecha-creacion">Fecha de creación</label>
+            <input formControlName="fechaSolicitud" type="text" class="form-control" bsDatepicker disabled>
+          </div>
+        </div>
+        <div class='col-sm-4'>
+          <div class='form-group'>
+            <label for="fecha-renovacion">Fecha de renovación</label>
+            <input formControlName="fechaRenovacion" type="text" placeholder="Fecha de renovación" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }" [minDate]="minDate" [maxDate]="maxDate"
+              #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
+            <div *ngIf="submitted && f.fechaRenovacion.errors" class="invalid-feedback">
+              <div *ngIf="f.fechaRenovacion.errors.required">La fecha de renovación es requerida</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+          <div class="col-sm-3">
+              <div class="form-group">
+                <label class="label-tipo-identificacion-cliente" for="tipo-identificacion-cliente">Tipo de identificación del cliente</label>
+                <select formControlName="tipoIdentificacionCliente" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoIdentificacionCliente.errors }">
+                  <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                  <option value="Nit">Nit</option>
+                </select>
+                <div *ngIf="submitted && f.tipoIdentificacionCliente.errors" class="invalid-feedback">
+                  <div *ngIf="f.tipoIdentificacionCliente.errors.required">El tipo de identificación del cliente es
+                    requerido</div>
+                </div>
+              </div>
+            </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="cliente">Cliente</label>
+            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control"  maxlength="15" numbersOnly
+              [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
+            <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
+              <div *ngIf="f.cliente.errors.required">El cliente es requerido</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <button type="button" (click)="buscarCliente(template)" class="buscar-cliente btn btn-primary">Buscar
+              cliente</button>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="datos-clientes form-group">
+            <div class="cliente-nombre">
+              <span>
+                {{nombreCliente}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="tipo-negocio">Tipo de negocio</label>
+            <select formControlName="ddltipoNegocio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ddltipoNegocio.errors }"
+              (change)="mostrarEstados($event);">
+              <option *ngFor="let tipoNegocio of tiposNegocio" [value]="tipoNegocio.title" [text]="tipoNegocio.title">
+                {{tipoNegocio.title}}
+              </option>
+            </select>
+            <div *ngIf="submitted && f.ddltipoNegocio.errors" class="invalid-feedback">
+              <div *ngIf="f.ddltipoNegocio.errors.required">Debe seleccionar un tipo de negocio</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div id="zonaEstado" [hidden]="!mostrarDivEstado" class="form-group">
+            <label for="estado">Estado</label>
+            <div class="checkbox" *ngFor="let estado of estados">
+              <label><input name="grupoEstados" type="checkbox" (change)='seleccionarEstado(estado)' [checked]="estado.seleccionado">{{estado.title}}</label>
+            </div>
+            <div *ngIf="submitted && !validarSeleccionEstado()" class="invalid-feedback">
+              <div>Debe seleccionar un estado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="tipo-gestion">Tipo de Gestión</label>
+            <select formControlName="tipoGestion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoGestion.errors }">
+              <option *ngFor="let tipoGestion of tiposGestion" [value]="tipoGestion.title" [text]="tipoGestion.title">
+                {{tipoGestion.title}}
+              </option>
+            </select>
+            <div *ngIf="submitted && f.tipoGestion.errors" class="invalid-feedback">
+              <div *ngIf="f.tipoGestion.errors.required">Debe seleccionar un tipo de Gestión</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="responsable">Responsable</label>
+            <input formControlName="responsable" type="text" placeholder="Responsable" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.responsable.errors }" />
+            <div *ngIf="submitted && f.responsable.errors" class="invalid-feedback">
+              <div *ngIf="f.responsable.errors.required">El responsable es requerido</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="correo">Correo electrónico</label>
+            <input formControlName="correo" type="text" placeholder="Correo electrónico" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.correo.errors }" />
+            <div *ngIf="submitted && f.correo.errors" class="invalid-feedback">
+              <div *ngIf="f.correo.errors.required">El correo electrónico es requerido</div>
+              <div *ngIf="f.correo.errors.email">Debe escribir un correo válido</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="correo-2">Correo electrónico 2</label>
+            <input formControlName="correo2" type="text" placeholder="Correo electrónico 2" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.correo2.errors }" />
+            <div *ngIf="submitted && f.correo2.errors" class="invalid-feedback">
+              <div *ngIf="f.correo2.errors.email">Debe escribir un correo válido</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="form-group">
+              <label for="correo-3">Correo electrónico 3</label>
+              <input formControlName="correo3" type="text" placeholder="Correo electrónico 3" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.correo3.errors }" />
+              <div *ngIf="submitted && f.correo3.errors" class="invalid-feedback">
+                <div *ngIf="f.correo3.errors.email">Debe escribir un correo válido</div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+          <label for="tipo-formato">Formato de SLIP</label>
+          <select formControlName="tipoFormato" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoFormato.errors }">
+            <option *ngFor="let formato of formatos" [value]="formato.FieldValuesAsText.FileRef" [text]="formato.name">{{formato.name}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.tipoFormato.errors" class="invalid-feedback">
+            <div *ngIf="f.tipoFormato.errors.required">Debe seleccionar un tipo de formato</div>
+          </div>
+        </div>
+
+      </div>
+    </fieldset>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Guardar Slip</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{tituloModal}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    {{mensajeModal}}
+  </div>
+</ng-template>

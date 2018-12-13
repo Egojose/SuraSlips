@@ -3,6 +3,7 @@ import { Usuario } from '../dominio/usuario';
 import { SPServicio } from '../servicios/sp.servicio';
 import { Slip } from '../dominio/slip';
 import { MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -12,7 +13,7 @@ import { MatTableDataSource } from '@angular/material';
 
 export class MisSolicitudesComponent implements OnInit {
 
-  constructor(private servicio: SPServicio) {
+  constructor(private servicio: SPServicio, private router: Router) {
 
    }
 
@@ -22,12 +23,18 @@ export class MisSolicitudesComponent implements OnInit {
   misSlips: Slip[] = [];
 
   ngOnInit() {
-    this.RecuperarUsuario();
-    this.ObtenerMisSolicitudes();
+    this.ObtenerUsuarioActual();
   }
 
-  RecuperarUsuario() {
-    this.usuarioActual = JSON.parse(sessionStorage.getItem('usuario'));
+  ObtenerUsuarioActual() {
+    this.servicio.ObtenerUsuarioActual().subscribe(
+      (Response) => {
+        this.usuarioActual = new Usuario(Response.Id, Response.Title, Response.email);
+        this.ObtenerMisSolicitudes();
+      }, err => {
+        console.log('Error obteniendo usuario: ' + err);
+      }
+    )
   }
 
   ObtenerMisSolicitudes(){
@@ -35,7 +42,6 @@ export class MisSolicitudesComponent implements OnInit {
     this.servicio.obtenerMisSlips(idUsuario).subscribe(
       (Response) => {
         this.misSlips = Slip.fromJsonList(Response);
-        console.log(this.misSlips);
         this.dataSource = new MatTableDataSource(this.misSlips);
       }
     )
@@ -43,6 +49,11 @@ export class MisSolicitudesComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  editarPropiedadesSlip(slip){
+    sessionStorage.setItem('slip',JSON.stringify(slip));
+    this.router.navigate(["/editar-solicitud"]);
   }
 
 }
