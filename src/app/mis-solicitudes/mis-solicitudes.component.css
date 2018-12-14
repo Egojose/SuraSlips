@@ -1,16 +1,36 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
 table {
     width: 100%;
-  }
-  
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-
-  .example-button-row button,
-.example-button-row a {
-  margin-right: 8px;
 }
 
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.example-button-row button,
+.example-button-row a {
+    margin-right: 8px;
+}
+
+body {
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+}
+
+.basic-container {
+    padding: 30px;
+}
+
+.version-info {
+    font-size: 8pt;
+    float: right;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.alertas {
+    margin-top: 5%;
+}

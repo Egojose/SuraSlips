@@ -23,7 +23,7 @@ export class SPServicio {
             headers: {
                 "Accept": "application/json; odata=verbose",
                 'Content-Type': 'application/json;odata=verbose',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDQ3MTUwNzcsIm5iZiI6MTU0NDcxNTA3NywiZXhwIjoxNTQ0NzQ0MTc3LCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.XoDASZQ8Q9T7jWgHNYU8SjZVnli5FI-mUc7mmz_A2tR3dqxfYysyLU4r17JX5ekobcNaqTgtPPmfgAfhA735Pm669uJk4MicQgDH4OGD3KGLkGPKzLJIj3Dpz33vCUQ6IpGqhjHv6hJwKovyfg9QbrkG1drA3AZCp49mlCQPOEuMROeBK82lzoV8gmZgX71LQh6WD9lsbz3-IrzxGP5dHuMG5-j5EU0vAJieXTR__jU4xMTUlKPetYebTJ3mvp3mzPIXEWPfrCPjCydSajkZ7R3X3YmICKJRXuYDa6OC8H8jVJ-j3EYTSkQCbda7Cbs4jALhHpaGjCeDOgFQzS7bRw'
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDQ4MjExMDYsIm5iZiI6MTU0NDgyMTEwNiwiZXhwIjoxNTQ0ODUwMjA2LCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.QRY3i8MLdNrgdOuxw1Q4XJDEo5QEj8m7muFx6x_vnSYhkUfZdkv5JbZAVy3py1GAqK8eM5vxt9MkahTW_IjzKiwUYA651xnfiO4gUzDtmo_4zjawhm1pX-GLE-N9mcbLDyQcEn1XusyD-9kdXTyBLpmvxtIzau6HgiHfFJV4rDzH2QXlPVUX4d-gob5yMokwL97AxxxCTwh7vU2g1BPQrhq2vhPfihmSD-1A9GLFPqfT634LfRLSlMHQstKsPIOE9d0gJv_8lqa4WVJKodIdK75URtzj4JaaqDYYzAQRDuUwD6kc2kObhs0bT1g7b7L1vw0mkPRElV1S3FwD2aGlAA'
             }
         }, environment.urlWeb);
 
@@ -50,13 +50,13 @@ export class SPServicio {
         return respuesta;
     }
 
-    agregarSlipDocumento(sufijo: string, documento: File){
+    agregarSlipDocumento(sufijo: string, documento: File) {
         return this.obtenerConfiguracion().web.getFolderByServerRelativeUrl(environment.urlReltativa + environment.bibliotecaSlips).files.add(sufijo + "-" + documento.name, documento, true);
     }
 
-    agregarSLIPinformacion(slip: Slip){
+    agregarSLIPinformacion(slip: Slip) {
         return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlipsAuxiliar).items.add({
-            Title:slip.titulo,
+            Title: slip.titulo,
             TipoIdentificacionCliente: slip.tipoIdentificacionCliente,
             Cliente: slip.nombreCliente,
             DNICliente: slip.dniCliente,
@@ -72,12 +72,12 @@ export class SPServicio {
         });
     }
 
-    ObtenerTiposGestion(){
+    ObtenerTiposGestion() {
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoGestion).items.getAll());
         return respuesta;
     }
 
-    ObtenerTipoResponsables(){
+    ObtenerTipoResponsables() {
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoResponsables).items.getAll());
         return respuesta;
     }
@@ -92,12 +92,12 @@ export class SPServicio {
         return respuesta;
     }
 
-    ObtenerCategorias(){
+    ObtenerCategorias() {
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaCategorias).items.orderBy("Title", true).getAll());
         return respuesta;
     }
 
-    ObtenerFormatosSlips(){
+    ObtenerFormatosSlips() {
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaPlantillas).items.select("FieldValuesAsText/FileRef", "Title", "ID").expand("FieldValuesAsText").get());
         return respuesta;
     }
@@ -111,8 +111,19 @@ export class SPServicio {
         return respuesta;
     }
 
-    obtenerMisSlips(usuarioId: number){
-        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.select("ID", "Title", "Slip/ID", "Slip/Title", "Slip/Cliente", "Slip/DNICliente", "Slip/FechaRenovacion", "Slip/TipoNegocio", "Slip/EstadoSlip", "Slip/TipoGestion", "Slip/Responsable", "Slip/Correo1", "Slip/Correo2", "Slip/Correo3", "Slip/FormatoSLIP", "Slip/TipoIdentificacionCliente", "Created", "Modified", "Author/Title", "Editor/Title").expand("Slip", "Author", "Editor").filter("AuthorId eq " + usuarioId + " ").get());
+    obtenerMisSlips(usuarioId: number) {
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.select("ID", "Title", "Slip/ID", "Slip/Title", "Slip/Cliente", "Slip/DNICliente", "Slip/FechaRenovacion", "Slip/TipoNegocio", "Slip/EstadoSlip", "Slip/TipoGestion", "Slip/Responsable", "Slip/Correo1", "Slip/Correo2", "Slip/Correo3", "Slip/FormatoSLIP", "Slip/TipoIdentificacionCliente", "Slip/UrlCompartir", "Created", "Modified", "Author/Title", "Editor/Title").expand("Slip", "Author", "Editor").filter("AuthorId eq " + usuarioId + " ").get());
         return respuesta;
     }
+
+    obtenerVersiones(documentoId: number) {
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(documentoId).versions.get());
+        return respuesta;
+    }
+
+    obtenerIntegrantesSlip() {
+        let respuesta = from(this.obtenerConfiguracion().web.siteGroups.getByName("Integrantes de la Gestión de Slips").users.get());
+        return respuesta;
+    }
+
 }

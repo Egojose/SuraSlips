@@ -17,6 +17,8 @@ export class Slip {
         public CreadoPor?: any,
         public ModificadoPor?: any,
         public diasTranscurridos?: number,
+        public urlcompartir?: string,
+        public versions?: any,
         public id?: number) { }
 
     public static fromJson(element: any) {
@@ -38,7 +40,13 @@ export class Slip {
             element.Author,
             element.Editor,
             this.obtenerDiasTranscurridos(this.parseDate(element.Created), this.parseDate(element.Slip.FechaRenovacion)),
+            element.Slip.UrlCompartir,
+            element.Versions,
             element.ID);
+    }
+
+    static formatDate(value) {
+        return value.getDate() + value.getMonth() + 1 + "/"  + "/" + value.getYear();
     }
 
     static obtenerDiasTranscurridos(FechaCreacion: Date, FechaRenovacion: Date): number {
@@ -54,7 +62,7 @@ export class Slip {
 
     static parseDate(input) {
         var parts = input.match(/(\d+)/g);
-        return new Date(parts[0], parts[1] - 1, parts[2]); 
+        return new Date(parts[0], parts[1] - 1, parts[2]);
     }
 
     public static fromJsonList(elements: any) {

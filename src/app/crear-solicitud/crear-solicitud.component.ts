@@ -250,7 +250,6 @@ export class CrearSolicitudComponent implements OnInit {
     this.loading = true;
     let valorFechaRenovacion = this.registerForm.controls["fechaRenovacion"].value;
     let valorTipoIdentificacionCliente =  this.registerForm.controls["tipoIdentificacionCliente"].value;
-    let valorCliente =  this.registerForm.controls["cliente"].value;
     let valorLabelCliente = this.nombreCliente;
     let valorDniCliente = this.dniCliente;
     let valorTipoNegocio = this.tipoNegocio;
@@ -262,7 +261,7 @@ export class CrearSolicitudComponent implements OnInit {
     let valorCorreo3 = this.registerForm.controls["correo3"].value;
     let valorFormatoSlip = this.registerForm.controls["tipoFormato"].value;
     let identificadorSlip = "SLIP-" + this.generarllaveDocumento();
-    this.slipGuardar = new Slip(identificadorSlip, new Date(), valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip);
+    this.slipGuardar = new Slip(identificadorSlip, new Date(), valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip);
 
     if(valorLabelCliente == ""){
       this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);

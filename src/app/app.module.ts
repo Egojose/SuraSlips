@@ -12,12 +12,14 @@ import { AppComponent } from './app.component';
 import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
 import { EditarSolicitudComponent } from './editar-solicitud/editar-solicitud.component';
 import { DescargarPlantillasComponent } from './descargar-plantillas/descargar-plantillas.component';
-import { MisSolicitudesComponent } from './mis-solicitudes/mis-solicitudes.component';
+import { MisSolicitudesComponent, modalReasignar } from './mis-solicitudes/mis-solicitudes.component';
 import { MenuComponent } from './menu/menu.component';
+
 import { SPServicio } from './servicios/sp.servicio';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NumberDirective } from './directivas/numbers-only.directive';
-import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule } from '@angular/material';
+import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatSelectModule, MatButtonModule } from '@angular/material';
+import { SuraServicio } from './servicios/sura.servicio';
 
 @NgModule({
   declarations: [
@@ -27,8 +29,10 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule } fro
     DescargarPlantillasComponent,
     MisSolicitudesComponent,
     MenuComponent,
-    NumberDirective
+    NumberDirective,
+    modalReasignar
   ],
+  entryComponents: [modalReasignar],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -39,6 +43,11 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule } fro
     MatFormFieldModule,
     MatInputModule,
     MatMenuModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatButtonModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
@@ -51,7 +60,7 @@ import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule } fro
       {path:'descargar-plantillas', component:DescargarPlantillasComponent}
     ])
   ],
-  providers: [SPServicio],
+  providers: [SPServicio, SuraServicio],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
