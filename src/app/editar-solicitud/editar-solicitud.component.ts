@@ -12,7 +12,6 @@ import { SPServicio } from '../servicios/sp.servicio';
 import { SuraServicio } from '../servicios/sura.servicio';
 import { Router } from '@angular/router';
 import { setTheme } from 'ngx-bootstrap/utils';
-import { ItemAddResult } from 'sp-pnp-js';
 
 @Component({
   selector: 'app-editar-solicitud',
@@ -45,8 +44,7 @@ export class EditarSolicitudComponent implements OnInit {
   tipoNegocio: string;
   tituloModal: string;
   mensajeModal: string;
-  documento: File;
-  slipGuardar: Slip;
+  slipActualizar: Slip;
   submitted = false;
 
   constructor(private formBuilder: FormBuilder,
@@ -68,7 +66,6 @@ export class EditarSolicitudComponent implements OnInit {
 
   recuperarSlip() {
     this.slip = JSON.parse(sessionStorage.getItem('slip'));
-    console.log(this.slip);
   }
 
   RecuperarUsuario() {
@@ -163,12 +160,18 @@ export class EditarSolicitudComponent implements OnInit {
     let opciones = event.target['options'];
     let indiceseleccionado = opciones.selectedIndex;
     this.tipoNegocio = opciones[indiceseleccionado].text;
-    let idTipoNegocio = evento.target.value;
+    let tipoNegocio = evento.target.value;
     this.mostrarDivEstado = true;
-    this.servicio.ObtenerEstadosPorTipoNegocio(idTipoNegocio).subscribe(
+
+    this.servicio.ObtenerTipoNegocioPorNombre(tipoNegocio).subscribe(
       (Response) => {
-        this.estados = Estado.fromJsonList(Response);
-        this.loading = false;
+        this.tipoNegocioConsulta = TipoNegocio.fromJsonList(Response)[0];
+        this.servicio.ObtenerEstadosPorTipoNegocio(this.tipoNegocioConsulta.id).subscribe(
+          (Response) => {
+            this.estados = Estado.fromJsonList(Response);
+            this.loading = false;
+          }
+        )
       }
     )
   }
@@ -198,21 +201,39 @@ export class EditarSolicitudComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    this.guardarSlip(template);
+    this.actualizarSlip(template);
   }
 
-  guardarSlip(template: TemplateRef<any>) {
-    console.log("Se debe actualizar el slip");
-  }
-
-  obtenerEstadoSeleccionado(): string {
-    let valorEstadoSeleccionado;
-    this.estados.forEach(estado => {
-      if (estado.seleccionado) {
-        valorEstadoSeleccionado = estado.title;
-      }
-    });
-    return valorEstadoSeleccionado;
+  actualizarSlip(template: TemplateRef<any>) {
+    
+    this.loading = true;
+    let valorFechaRenovacion = this.registerForm.controls["fechaRenovacion"].value;
+    let valorTipoIdentificacionCliente = this.registerForm.controls["tipoIdentificacionCliente"].value;
+    let valorLabelCliente = this.nombreCliente;
+    let valorDniCliente = this.dniCliente;
+    let valorTipoNegocio = this.tipoNegocio;
+    let valorEstado = this.registerForm.controls["rdbEstado"].value;
+    let valorTipoGestion = this.registerForm.controls["tipoGestion"].value;
+    let valorResponsable = this.registerForm.controls["responsable"].value;
+    let valorCorreo = this.registerForm.controls["correo"].value;
+    let valorCorreo2 = this.registerForm.controls["correo2"].value;
+    let valorCorreo3 = this.registerForm.controls["correo3"].value;
+    this.slipActualizar = new Slip("", null, valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3,"");
+    this.slipActualizar.id = this.slip.slipAuxiliarId;
+    if (valorLabelCliente == "") {
+      this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);
+    } else {
+      this.servicio.actualizarPropiedadesSlip(this.slipActualizar).then(
+        (respuesta) => {
+          this.mostrarAlerta("Slip fue actualizado", "El slip fue actualizado con éxito", template);
+          this.loading = false;
+          this.router.navigate(['/mis-solicitudes']);
+        }, error => {
+          console.log(error);
+          alert('Ha ocurrido un error al actualizar la actividad');
+        }
+      );
+    }
   }
 
   buscarCliente(template: TemplateRef<any>) {

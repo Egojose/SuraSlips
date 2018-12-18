@@ -171,7 +171,7 @@
 
         <div class="col-sm-4">
           <label for="tipo-formato">Formato de SLIP</label>
-          <select formControlName="tipoFormato" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoFormato.errors }">
+          <select formControlName="tipoFormato" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoFormato.errors }" disabled>
             <option *ngFor="let formato of formatos" [value]="formato.FieldValuesAsText.FileRef" [text]="formato.name">{{formato.name}}
             </option>
           </select>

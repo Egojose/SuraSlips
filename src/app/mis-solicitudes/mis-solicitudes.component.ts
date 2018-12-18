@@ -51,6 +51,7 @@ export class MisSolicitudesComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.misSlips);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          console.log(this.misSlips);
         }
         else{
           this.empty = true;
@@ -86,7 +87,6 @@ export class MisSolicitudesComponent implements OnInit {
   }
 
   ReasignarSlip(slip) {
-
     this.dialog.open(modalReasignar, {
       height: '300px',
       width: '600px',

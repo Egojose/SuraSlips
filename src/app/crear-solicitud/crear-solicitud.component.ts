@@ -43,7 +43,6 @@ export class CrearSolicitudComponent implements OnInit {
   tipoNegocio: string;
   tituloModal: string;
   mensajeModal: string;
-  documento: File;
   slipGuardar: Slip;
   submitted = false;
 
@@ -86,16 +85,6 @@ export class CrearSolicitudComponent implements OnInit {
       correo3: ['', Validators.email],
       tipoFormato: ['', Validators.required]
     });
-  }
-
-  validarSeleccionEstado() {
-    let valido = false;
-    this.estados.forEach(estado => {
-      if (estado.seleccionado) {
-        valido = true;
-      }
-    });
-    return valido;
   }
 
   ObtenerTipoNegocio() {
@@ -243,7 +232,6 @@ export class CrearSolicitudComponent implements OnInit {
     let valorDniCliente = this.dniCliente;
     let valorTipoNegocio = this.tipoNegocio;
     let valorEstado = this.registerForm.controls["rdbEstado"].value;
-    console.log(valorEstado);
     let valorTipoGestion = this.registerForm.controls["tipoGestion"].value;
     let valorResponsable = this.registerForm.controls["responsable"].value;
     let valorCorreo = this.registerForm.controls["correo"].value;

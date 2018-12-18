@@ -19,6 +19,7 @@ export class Slip {
         public diasTranscurridos?: number,
         public urlcompartir?: string,
         public versions?: any,
+        public slipAuxiliarId?: number,
         public id?: number) { }
 
     public static fromJson(element: any) {
@@ -42,6 +43,7 @@ export class Slip {
             (element.Created != null && element.Slip.FechaRenovacion != null) ? this.obtenerDiasTranscurridos(this.parseDate(element.Created), this.parseDate(element.Slip.FechaRenovacion)) : 0,
             (element.Slip.UrlCompartir != null) ? element.Slip.UrlCompartir: "",
             (element.Versions != null) ? element.Versions: null,
+            element.Slip.ID,
             element.ID);
     }
 
