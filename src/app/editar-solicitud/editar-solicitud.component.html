@@ -35,25 +35,26 @@
 
       <div class="row">
 
-          <div class="col-sm-3">
-              <div class="form-group">
-                <label class="label-tipo-identificacion-cliente" for="tipo-identificacion-cliente">Tipo de identificación del cliente</label>
-                <select formControlName="tipoIdentificacionCliente" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoIdentificacionCliente.errors }">
-                  <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
-                  <option value="Nit">Nit</option>
-                </select>
-                <div *ngIf="submitted && f.tipoIdentificacionCliente.errors" class="invalid-feedback">
-                  <div *ngIf="f.tipoIdentificacionCliente.errors.required">El tipo de identificación del cliente es
-                    requerido</div>
-                </div>
-              </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label class="label-tipo-identificacion-cliente" for="tipo-identificacion-cliente">Tipo de identificación
+              del cliente</label>
+            <select formControlName="tipoIdentificacionCliente" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoIdentificacionCliente.errors }">
+              <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+              <option value="Nit">Nit</option>
+            </select>
+            <div *ngIf="submitted && f.tipoIdentificacionCliente.errors" class="invalid-feedback">
+              <div *ngIf="f.tipoIdentificacionCliente.errors.required">El tipo de identificación del cliente es
+                requerido</div>
             </div>
+          </div>
+        </div>
 
         <div class="col-sm-3">
           <div class="form-group">
             <label for="cliente">Cliente</label>
-            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control"  maxlength="15" numbersOnly
-              [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
+            <input formControlName="cliente" type="text" placeholder="Escriba el DNI del cliente" class="form-control"
+              maxlength="15" numbersOnly [ngClass]="{ 'is-invalid': submitted && f.cliente.errors }" />
             <div *ngIf="submitted && f.cliente.errors" class="invalid-feedback">
               <div *ngIf="f.cliente.errors.required">El cliente es requerido</div>
             </div>
@@ -97,13 +98,14 @@
         </div>
         <div class="col-sm-6">
           <div id="zonaEstado" [hidden]="!mostrarDivEstado" class="form-group">
-            <label for="estado">Estado</label>
-            <div class="checkbox" *ngFor="let estado of estados">
-              <label><input name="grupoEstados" type="checkbox" (change)='seleccionarEstado(estado)' [checked]="estado.seleccionado">{{estado.title}}</label>
-            </div>
-            <div *ngIf="submitted && !validarSeleccionEstado()" class="invalid-feedback">
-              <div>Debe seleccionar un estado</div>
-            </div>
+            <mat-radio-group class="example-radio-group" formControlName="rdbEstado">
+              <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado.title">
+                {{estado.title}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div *ngIf="submitted && f.rdbEstado.errors" class="invalid-feedback">
+            <div>Debe seleccionar un estado</div>
           </div>
         </div>
       </div>
@@ -158,13 +160,13 @@
 
         <div class="col-sm-4">
           <div class="form-group">
-              <label for="correo-3">Correo electrónico 3</label>
-              <input formControlName="correo3" type="text" placeholder="Correo electrónico 3" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.correo3.errors }" />
-              <div *ngIf="submitted && f.correo3.errors" class="invalid-feedback">
-                <div *ngIf="f.correo3.errors.email">Debe escribir un correo válido</div>
-              </div>
+            <label for="correo-3">Correo electrónico 3</label>
+            <input formControlName="correo3" type="text" placeholder="Correo electrónico 3" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.correo3.errors }" />
+            <div *ngIf="submitted && f.correo3.errors" class="invalid-feedback">
+              <div *ngIf="f.correo3.errors.email">Debe escribir un correo válido</div>
             </div>
+          </div>
         </div>
 
         <div class="col-sm-4">

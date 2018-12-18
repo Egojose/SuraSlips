@@ -4,6 +4,7 @@ import { SPServicio } from '../servicios/sp.servicio';
 import { Slip } from '../dominio/slip';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -17,12 +18,13 @@ export class MisSolicitudesComponent implements OnInit {
 
   }
 
-  displayedColumns: string[] = ['id', 'nombreCliente', 'fechaCreacion', 'fechaRenovacion', 'diasTranscurridos', 'tipoNegocio', 'estado', 'menu'];
+  displayedColumns: string[] = ['nombreCliente', 'fechaCreacion', 'fechaRenovacion', 'diasTranscurridos', 'tipoNegocio', 'estado', 'menu'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   usuarioActual: Usuario;
   misSlips: Slip[] = [];
+  empty;
 
   ngOnInit() {
     this.ObtenerUsuarioActual();
@@ -44,9 +46,16 @@ export class MisSolicitudesComponent implements OnInit {
     this.servicio.obtenerMisSlips(idUsuario).subscribe(
       (Response) => {
         this.misSlips = Slip.fromJsonList(Response);
-        this.dataSource = new MatTableDataSource(this.misSlips);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        if (this.misSlips.length > 0) {
+          this.empty = false;
+          this.dataSource = new MatTableDataSource(this.misSlips);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+        else{
+          this.empty = true;
+        }
+
       }, err => {
         console.log('Error obteniendo mis slips: ' + err);
       }

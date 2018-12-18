@@ -50,7 +50,7 @@ export class CrearSolicitudComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private servicio: SPServicio,
     private servicioClientes: SuraServicio,
-    private servicioModal: BsModalService, 
+    private servicioModal: BsModalService,
     private router: Router) {
     setTheme('bs4');
     this.minDate = new Date();
@@ -78,6 +78,7 @@ export class CrearSolicitudComponent implements OnInit {
       tipoIdentificacionCliente: ['', Validators.required],
       cliente: ['', Validators.required],
       ddltipoNegocio: ['', Validators.required],
+      rdbEstado: ['', Validators.required],
       tipoGestion: ['', Validators.required],
       responsable: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
@@ -115,7 +116,7 @@ export class CrearSolicitudComponent implements OnInit {
     )
   }
 
-  ObtenerFormatosSlips(){
+  ObtenerFormatosSlips() {
     this.servicio.ObtenerFormatosSlips().subscribe(
       (Response) => {
         this.formatos = Formato.fromJsonList(Response);
@@ -140,17 +141,6 @@ export class CrearSolicitudComponent implements OnInit {
     )
   }
 
-  seleccionarEstado(estado: Estado) {
-    this.limpiarEstadosSeleccionados();
-    estado.seleccionado = !estado.seleccionado;
-  }
-
-  limpiarEstadosSeleccionados() {
-    this.estados.forEach(estado => {
-      estado.seleccionado = false;
-    });
-  }
-
   EstablecerValoresFormularios() {
     this.registerForm.setValue({
       fechaSolicitud: new Date(),
@@ -158,11 +148,12 @@ export class CrearSolicitudComponent implements OnInit {
       tipoIdentificacionCliente: '',
       cliente: '',
       ddltipoNegocio: '',
+      rdbEstado: '',
       tipoGestion: '',
       responsable: '',
       correo: '',
       correo2: '',
-      correo3:'',
+      correo3: '',
       tipoFormato: ''
     });
     this.loading = false;
@@ -173,18 +164,17 @@ export class CrearSolicitudComponent implements OnInit {
     let dniCliente = this.registerForm.controls["cliente"].value;
     if (tipoIdentificacionCliente != "" && dniCliente != "") {
       let dniBuscar;
-      if(tipoIdentificacionCliente == "Cédula de ciudadanía"){
+      if (tipoIdentificacionCliente == "Cédula de ciudadanía") {
         dniBuscar = "C" + dniCliente;
       }
-      if(tipoIdentificacionCliente == "Nit"){
+      if (tipoIdentificacionCliente == "Nit") {
         dniBuscar = "A" + dniCliente;
       }
       this.obtenerDatosCliente(dniBuscar, template);
     } else {
-      if(tipoIdentificacionCliente == "")
-      {
+      if (tipoIdentificacionCliente == "") {
         this.mostrarAlerta("Tipo de identificación del cliente está vacío", "Debes de seleccionar un tipo de identificación para poder buscar el cliente", template);
-      }else{
+      } else {
         this.mostrarAlerta("DNI está vacío", "Debes escribir el DNI del cliente a buscar", template);
       }
     }
@@ -246,14 +236,14 @@ export class CrearSolicitudComponent implements OnInit {
   }
 
   guardarSlip(template: TemplateRef<any>) {
-
     this.loading = true;
     let valorFechaRenovacion = this.registerForm.controls["fechaRenovacion"].value;
-    let valorTipoIdentificacionCliente =  this.registerForm.controls["tipoIdentificacionCliente"].value;
+    let valorTipoIdentificacionCliente = this.registerForm.controls["tipoIdentificacionCliente"].value;
     let valorLabelCliente = this.nombreCliente;
     let valorDniCliente = this.dniCliente;
     let valorTipoNegocio = this.tipoNegocio;
-    let valorEstado = this.obtenerEstadoSeleccionado();
+    let valorEstado = this.registerForm.controls["rdbEstado"].value;
+    console.log(valorEstado);
     let valorTipoGestion = this.registerForm.controls["tipoGestion"].value;
     let valorResponsable = this.registerForm.controls["responsable"].value;
     let valorCorreo = this.registerForm.controls["correo"].value;
@@ -261,21 +251,20 @@ export class CrearSolicitudComponent implements OnInit {
     let valorCorreo3 = this.registerForm.controls["correo3"].value;
     let valorFormatoSlip = this.registerForm.controls["tipoFormato"].value;
     let identificadorSlip = "SLIP-" + this.generarllaveDocumento();
-    this.slipGuardar = new Slip(identificadorSlip, new Date(), valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip);
+    this.slipGuardar = new Slip(identificadorSlip, new Date(), valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip, this.usuarioActual.id);
 
-    if(valorLabelCliente == ""){
+    if (valorLabelCliente == "") {
       this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);
-    }else{
+    } else {
       this.servicio.agregarSLIPinformacion(this.slipGuardar).then(
-        (iar: ItemAddResult)=>{
+        (iar: ItemAddResult) => {
           this.mostrarAlerta("Slip fue guardado", "El slip fue guardado con éxito, en breve le llegará una notificación", template);
           this.loading = false;
           this.router.navigate(['/mis-solicitudes']);
-        },err=>{
+        }, err => {
           alert('Error en la creación del SLIP!!');
         }
       )
-      
     }
   }
 
@@ -287,16 +276,6 @@ export class CrearSolicitudComponent implements OnInit {
     var fecha = new Date();
     var valorprimitivo = fecha.valueOf().toString();
     return valorprimitivo;
-  }
-
-  obtenerEstadoSeleccionado(): string {
-    let valorEstadoSeleccionado;
-    this.estados.forEach(estado => {
-      if (estado.seleccionado) {
-        valorEstadoSeleccionado = estado.title;
-      }
-    });
-    return valorEstadoSeleccionado;
   }
 
 }

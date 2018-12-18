@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,7 +18,7 @@ import { MenuComponent } from './menu/menu.component';
 import { SPServicio } from './servicios/sp.servicio';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NumberDirective } from './directivas/numbers-only.directive';
-import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatSelectModule, MatButtonModule } from '@angular/material';
+import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatSelectModule, MatButtonModule, MatToolbarModule, MatRadioModule, MatRadioGroup } from '@angular/material';
 import { SuraServicio } from './servicios/sura.servicio';
 
 @NgModule({
@@ -37,6 +37,7 @@ import { SuraServicio } from './servicios/sura.servicio';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     DataTablesModule,
     MatTableModule,
@@ -45,6 +46,8 @@ import { SuraServicio } from './servicios/sura.servicio';
     MatMenuModule,
     MatPaginatorModule,
     MatSortModule,
+    MatToolbarModule,
+    MatRadioModule,
     MatDialogModule,
     MatSelectModule,
     MatButtonModule,
