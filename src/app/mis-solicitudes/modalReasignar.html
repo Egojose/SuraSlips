@@ -1,18 +1,29 @@
 <h2 mat-dialog-title>Reasignar SLIP</h2>
 <hr>
-<mat-dialog-content class="mat-typography">
-<mat-form-field class="example-full-width">
-<mat-select placeholder="Reasignar a">
-<mat-option *ngFor="let Usuarios of ObjUsuariosSlip" [value]="Usuarios.Id">
-{{Usuarios.Title}}
-</mat-option>
-</mat-select>
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="Reasignar()">Reasignar</button>
 
-<div class="alertas" [hidden]="hiddenAlerta">
-<alert type="success">
-<strong>Well done!</strong> You successfully read this important alert message.
-</alert>
-</div>
+<mat-dialog-content class="mat-typography">
+    <mat-form-field class="example-full-width">
+        <mat-select placeholder="Reasignar a" [formControl]="ReasignarControl"  [(ngModel)]="ReasignarId"  required>
+            <mat-option *ngFor="let Usuarios of ObjUsuariosSlip"  [value]="Usuarios.Id">
+                {{Usuarios.Title}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="ReasignarControl.hasError('required')">
+            Este campo es requerido
+        </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary"  (click)="Reasignar()">Reasignar</button>
+
+    <div class="alertas"  [hidden]="hiddenSuccess">
+        <alert type="success">
+            <strong>Se ha reasignado con éxito</strong>
+        </alert>
+    </div>
+
+    <div class="alertas"  [hidden]="hiddenError">
+        <alert type="error">
+            <strong>Ha ocurrido un error, inténtelo más tarde o comuníquese con el administrador</strong>
+        </alert>
+    </div>
+
 </mat-dialog-content>

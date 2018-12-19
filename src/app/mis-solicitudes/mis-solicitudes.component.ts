@@ -4,7 +4,8 @@ import { SPServicio } from '../servicios/sp.servicio';
 import { Slip } from '../dominio/slip';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { empty } from 'rxjs';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { historialVersiones } from '../dominio/historialVersiones';
 
 @Component({
   selector: 'app-mis-solicitudes',
@@ -53,7 +54,7 @@ export class MisSolicitudesComponent implements OnInit {
           this.dataSource.sort = this.sort;
           console.log(this.misSlips);
         }
-        else{
+        else {
           this.empty = true;
         }
 
@@ -77,16 +78,15 @@ export class MisSolicitudesComponent implements OnInit {
   }
 
   obtenerVersiones(slip) {
-    this.servicio.obtenerVersiones(slip.id).subscribe(
-      (Response) => {
-        console.log(Response);
-      }, err => {
-        console.log('Error obteniendo versiones: ' + err);
-      }
-    )
-  }
+    localStorage.setItem("IdSlip",slip.id);
+    this.dialog.open(modalHistorialVersiones, {
+      height: '400px',
+      width: '700px',
+    });    
+  } 
 
   ReasignarSlip(slip) {
+    sessionStorage.setItem('slip', JSON.stringify(slip));
     this.dialog.open(modalReasignar, {
       height: '300px',
       width: '600px',
@@ -111,14 +111,54 @@ export class MisSolicitudesComponent implements OnInit {
   styleUrls: ['./mis-solicitudes.component.css']
 })
 export class modalReasignar {
+  slip: Slip;
   ObjUsuariosSlip: any;
-  hiddenAlerta: boolean;
-  constructor(private servicio: SPServicio) {
-    this.hiddenAlerta = true;
+  hiddenSuccess: boolean;
+  hiddenError: boolean;
+  reasignarForm: FormGroup;
+  submitted: boolean;
+  UsuarioReasignar: any;
+  IdSlip: any;
+  ReasignarControl: FormControl;
+  ReasignarId: any;
+
+  constructor(private servicio: SPServicio, private formBuilder: FormBuilder, private routerReasignar: Router) {
+    this.hiddenSuccess = true;
+    this.hiddenError = true;
+  }
+
+  recuperarSlip() {
+    this.slip = JSON.parse(sessionStorage.getItem('slip'));
+  }
+
+  registrarControles() {
+    this.ReasignarControl = new FormControl('', [
+      Validators.required
+    ]);
   }
 
   ngOnInit(): void {
+    this.recuperarSlip();
+    this.registrarControles();
     this.obtenerUsuariosSlip();
+  }
+
+  Reasignar() {
+    this.ReasignarControl.markAsTouched();
+    if (this.ReasignarControl.status == "INVALID") {
+      return;
+    }
+
+    console.log("El id del usuario es: " + this.ReasignarId);
+    this.servicio.actualizarColumnaReasignar(this.slip, this.ReasignarId).then(
+      (respuesta) => {
+        this.hiddenSuccess = false;
+        setTimeout(function () { window.location.href = "/"; }, 2000);
+      }, error => {
+        console.log(error);
+        this.hiddenError = false;
+      }
+    );
   }
 
   obtenerUsuariosSlip() {
@@ -128,12 +168,38 @@ export class modalReasignar {
       }
     );
   }
-
-  Reasignar() {
-    this.hiddenAlerta = false;
-  }
 }
 
+@Component({
+  selector: 'modalHistorialVersiones',
+  templateUrl: 'modalHistorialVersiones.html',
+  styleUrls: ['./mis-solicitudes.component.css']
+})
+export class modalHistorialVersiones {
 
 
+  dsHistorialVersiones: any;
+  ObjHistorialVersiones: historialVersiones[] = [];
 
+  constructor(private servicio: SPServicio) {
+
+  }
+
+  displayedColumns: string[] = ['numero', 'Modificado', 'ModificadoPor', "VerDocumento"];
+  dataSource;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngOnInit(): void {
+    let IdSlip: number = parseInt(localStorage.getItem("IdSlip"));
+    this.servicio.obtenerVersiones(IdSlip).subscribe(
+      (Response) => {
+        this.ObjHistorialVersiones = historialVersiones.fromJsonList(Response);
+        this.dsHistorialVersiones = new MatTableDataSource(this.ObjHistorialVersiones);
+        this.dsHistorialVersiones.paginator = this.paginator;
+      }, err => {
+        console.log('Error obteniendo versiones: ' + err);
+      }
+    )
+  }
+}

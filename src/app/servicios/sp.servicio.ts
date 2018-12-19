@@ -23,7 +23,7 @@ export class SPServicio {
             headers: {
                 "Accept": "application/json; odata=verbose",
                 'Content-Type': 'application/json;odata=verbose',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDUxNDM5OTUsIm5iZiI6MTU0NTE0Mzk5NSwiZXhwIjoxNTQ1MTczMDk1LCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.Yd1-95LYuf8RCgL3VKSc5s-Ea6yuDrwA9KHIAY26kmi3-xVxTUpqAQCdO2yL0cPgo2SkwbqvOetxYFqX8WXG3t03bTqE285bswnQMVSG5Jep8dGEc2SpYREkzWI5xKm2CLzm9Ui7spjYX9_MmKAEIzrAqGEzYxYbSmDvtMINvzxZAdRuZex3zex4xRUaOnx33cqwD40ao9nrWqNXpHQWaI9U6GIzewz6Zvntlf85B57M2y6LxLCJFvcc1m49IQ_aBa4E5vuRQC5dkA0HXrrUCiZsWU6E6eZ_Q0kLVPZP3tXdh18fJpJ-zkSqjXgcJBZe_lAgfz1Ozk7ZUdNMHd3LeQ'
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDUyMzA5ODYsIm5iZiI6MTU0NTIzMDk4NiwiZXhwIjoxNTQ1MjYwMDg2LCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.pnbgD89XDR9MVpVfHi2yR0SklpWQtcJ9kfg5YFgMZ0n3jKNdz4KUxaFParyH-eHMfzfLg6Tzic7CNYGzRcg_Q_iCbmFIl4dsAagoaf0KUQL8Y7yF0HaTxI-0urqnX4DGXzn28wedNMufitVRJrOOFx1eAa8hqeofW933HxNIgxuAEJz6orHlwEg-U-WsJBs0RJK5FsAxfpEsGpvuuXAlX7hHowc3mAc2gnMd18vL415nriy6bj8s5BX2UGRqavi7OuSWX0TNV0xLIVo6NCle9WPols4qGPuMNexWS7I-wXC1FjQpGfh0vM8F35q92fQZou-tH1VFrSfUeuSXQQ-DEw'
             }
         }, environment.urlWeb);
 
@@ -50,7 +50,7 @@ export class SPServicio {
         return respuesta;
     }
 
-    ObtenerTipoNegocioPorNombre(tipoNegocio: string){
+    ObtenerTipoNegocioPorNombre(tipoNegocio: string) {
         let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoNegocio).items.filter(`Title eq '${tipoNegocio}'`).get());
         return respuesta;
     }
@@ -132,19 +132,25 @@ export class SPServicio {
         return respuesta;
     }
 
-    actualizarPropiedadesSlip(slip: Slip){
+    actualizarPropiedadesSlip(slip: Slip) {
         return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlipsAuxiliar).items.getById(slip.id).update({
-            FechaRenovacion:slip.fechaRenovacion, 
-            TipoIdentificacionCliente:slip.tipoIdentificacionCliente, 
-            Cliente:slip.nombreCliente, 
-            DNICliente:slip.dniCliente, 
-            TipoNegocio:slip.tipoNegocio, 
-            EstadoSlip:slip.estado,
+            FechaRenovacion: slip.fechaRenovacion,
+            TipoIdentificacionCliente: slip.tipoIdentificacionCliente,
+            Cliente: slip.nombreCliente,
+            DNICliente: slip.dniCliente,
+            TipoNegocio: slip.tipoNegocio,
+            EstadoSlip: slip.estado,
             TipoGestion: slip.tipoGestion,
             Responsable: slip.responsable,
-            Correo1:slip.correo1,
-            Correo2:slip.correo2,
-            Correo3:slip.correo3 
-          }); 
+            Correo1: slip.correo1,
+            Correo2: slip.correo2,
+            Correo3: slip.correo3
+        });
+    }
+
+    actualizarColumnaReasignar(slip: Slip, usuarioId: number) {
+        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(slip.id).update({
+            CreadorSlipId: usuarioId
+        });
     }
 }
