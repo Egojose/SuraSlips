@@ -60,7 +60,7 @@ export class SPServicio {
     }
 
     agregarSLIPinformacion(slip: Slip) {
-        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlipsAuxiliar).items.add({
+        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlips).items.add({
             Title: slip.titulo,
             TipoIdentificacionCliente: slip.tipoIdentificacionCliente,
             Cliente: slip.nombreCliente,
@@ -118,12 +118,12 @@ export class SPServicio {
     }
 
     obtenerMisSlips(usuarioId: number) {
-        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.select("ID", "Title", "Slip/ID", "Slip/Title", "Slip/Cliente", "Slip/DNICliente", "Slip/FechaRenovacion", "Slip/TipoNegocio", "Slip/EstadoSlip", "Slip/TipoGestion", "Slip/Responsable", "Slip/Correo1", "Slip/Correo2", "Slip/Correo3", "Slip/FormatoSLIP", "Slip/TipoIdentificacionCliente", "Slip/UrlCompartir", "Created", "Modified", "CreadorSlip/Title", "Editor/Title").expand("Slip", "CreadorSlip", "Editor").filter("CreadorSlip eq " + usuarioId + " ").get());
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlips).items.select("ID", "Title", "Cliente", "DNICliente", "FechaRenovacion", "TipoNegocio", "EstadoSlip", "TipoGestion", "Responsable", "Correo1", "Correo2", "Correo3", "FormatoSLIP", "TipoIdentificacionCliente", "UrlCompartir", "Created", "Modified", "CreadorSlip/Title", "Editor/Title", "EnvioCliente", "IDSlipDocumento").expand("CreadorSlip", "Editor").filter("CreadorSlip eq " + usuarioId + " ").get());
         return respuesta;
     }
 
-    obtenerVersiones(documentoId: number) {
-        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(documentoId).versions.get());
+    obtenerVersiones(slip: Slip) {
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(slip.documentoId).versions.get());
         return respuesta;
     }
 
@@ -133,7 +133,7 @@ export class SPServicio {
     }
 
     actualizarPropiedadesSlip(slip: Slip) {
-        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlipsAuxiliar).items.getById(slip.id).update({
+        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
             FechaRenovacion: slip.fechaRenovacion,
             TipoIdentificacionCliente: slip.tipoIdentificacionCliente,
             Cliente: slip.nombreCliente,
@@ -149,7 +149,7 @@ export class SPServicio {
     }
 
     actualizarColumnaReasignar(slip: Slip, usuarioId: number) {
-        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(slip.id).update({
+        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
             CreadorSlipId: usuarioId
         });
     }

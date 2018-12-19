@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 export class historialVersiones {
 
     static versionSthc:
-        number = 0;
+    number = 0;
 
     constructor(public numero: string, public fechaModificacion: string, public modificadorPor: string, public urlDocumento) {
     }

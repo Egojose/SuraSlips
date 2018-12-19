@@ -219,7 +219,7 @@ export class EditarSolicitudComponent implements OnInit {
     let valorCorreo2 = this.registerForm.controls["correo2"].value;
     let valorCorreo3 = this.registerForm.controls["correo3"].value;
     this.slipActualizar = new Slip("", null, valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3,"");
-    this.slipActualizar.id = this.slip.slipAuxiliarId;
+    this.slipActualizar.id = this.slip.id;
     if (valorLabelCliente == "") {
       this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);
     } else {

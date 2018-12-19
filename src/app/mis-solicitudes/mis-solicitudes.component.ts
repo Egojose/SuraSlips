@@ -52,7 +52,6 @@ export class MisSolicitudesComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.misSlips);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-          console.log(this.misSlips);
         }
         else {
           this.empty = true;
@@ -78,7 +77,8 @@ export class MisSolicitudesComponent implements OnInit {
   }
 
   obtenerVersiones(slip) {
-    localStorage.setItem("IdSlip",slip.id);
+    console.log(slip);
+    sessionStorage.setItem('slip', JSON.stringify(slip));
     this.dialog.open(modalHistorialVersiones, {
       height: '400px',
       width: '700px',
@@ -176,11 +176,9 @@ export class modalReasignar {
   styleUrls: ['./mis-solicitudes.component.css']
 })
 export class modalHistorialVersiones {
-
-
+  slip: Slip;
   dsHistorialVersiones: any;
   ObjHistorialVersiones: historialVersiones[] = [];
-
   constructor(private servicio: SPServicio) {
 
   }
@@ -190,10 +188,15 @@ export class modalHistorialVersiones {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  ngOnInit(): void {
-    let IdSlip: number = parseInt(localStorage.getItem("IdSlip"));
-    this.servicio.obtenerVersiones(IdSlip).subscribe(
+
+  recuperarSlip() {
+    this.slip = JSON.parse(sessionStorage.getItem('slip'));
+  }
+
+  ObtenerVersionesDocumento(){
+    this.servicio.obtenerVersiones(this.slip).subscribe(
       (Response) => {
+        console.log(Response);
         this.ObjHistorialVersiones = historialVersiones.fromJsonList(Response);
         this.dsHistorialVersiones = new MatTableDataSource(this.ObjHistorialVersiones);
         this.dsHistorialVersiones.paginator = this.paginator;
@@ -201,5 +204,10 @@ export class modalHistorialVersiones {
         console.log('Error obteniendo versiones: ' + err);
       }
     )
+  }
+
+  ngOnInit(): void {
+    this.recuperarSlip();
+    this.ObtenerVersionesDocumento();
   }
 }
