@@ -12,13 +12,13 @@ import { AppComponent } from './app.component';
 import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
 import { EditarSolicitudComponent } from './editar-solicitud/editar-solicitud.component';
 import { DescargarPlantillasComponent } from './descargar-plantillas/descargar-plantillas.component';
-import { MisSolicitudesComponent, modalReasignar, modalHistorialVersiones } from './mis-solicitudes/mis-solicitudes.component';
+import { MisSolicitudesComponent, modalReasignar, modalHistorialVersiones, modalEnvioCliente } from './mis-solicitudes/mis-solicitudes.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { SPServicio } from './servicios/sp.servicio';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NumberDirective } from './directivas/numbers-only.directive';
-import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatSelectModule, MatButtonModule, MatToolbarModule, MatRadioModule, MatRadioGroup } from '@angular/material';
+import { MatTableModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatSelectModule, MatButtonModule, MatToolbarModule, MatRadioModule, MatRadioGroup, MatListModule, MatCardModule } from '@angular/material';
 import { SuraServicio } from './servicios/sura.servicio';
 
 @NgModule({
@@ -31,9 +31,10 @@ import { SuraServicio } from './servicios/sura.servicio';
     MenuComponent,
     NumberDirective,
     modalReasignar,
-    modalHistorialVersiones
+    modalHistorialVersiones,
+    modalEnvioCliente
   ],
-  entryComponents: [modalReasignar, modalHistorialVersiones],
+  entryComponents: [modalReasignar, modalHistorialVersiones, modalEnvioCliente],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -52,6 +53,8 @@ import { SuraServicio } from './servicios/sura.servicio';
     MatDialogModule,
     MatSelectModule,
     MatButtonModule,
+    MatListModule,
+    MatCardModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),

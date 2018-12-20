@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Usuario } from '../dominio/usuario';
 import { SPServicio } from '../servicios/sp.servicio';
 import { Slip } from '../dominio/slip';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { historialVersiones } from '../dominio/historialVersiones';
@@ -93,16 +93,13 @@ export class MisSolicitudesComponent implements OnInit {
     });
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(modalReasignar, {
-      width: '250px'
+  EnvioCliente(slip) {    
+    sessionStorage.setItem('slip', JSON.stringify(slip));
+    const dialogRef = this.dialog.open(modalEnvioCliente, {
+      height: '380px',
+      width: '600px',
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
+  } 
 }
 
 @Component({
@@ -209,5 +206,41 @@ export class modalHistorialVersiones {
   ngOnInit(): void {
     this.recuperarSlip();
     this.ObtenerVersionesDocumento();
+  }
+}
+
+@Component({
+  selector: 'modalEnvioCliente',
+  templateUrl: 'modalEnvioCliente.html',
+  styleUrls: ['./mis-solicitudes.component.css']
+})
+
+export class modalEnvioCliente {
+  ObjSlip: Slip;
+  hiddenSuccess: boolean;
+  hiddenError: boolean;
+  
+  constructor(private servicio: SPServicio, public dialogRef: MatDialogRef<modalEnvioCliente>) {
+      this.hiddenSuccess=true;
+      this.hiddenError=true;
+  }
+
+  ngOnInit(): void {
+        this.ObjSlip = JSON.parse(sessionStorage.getItem('slip'));
+  }
+
+  EnviarSLIP(){      
+      this.servicio.actualizarColumnaEnvioCliente(this.ObjSlip).then(
+        (respuesta) => {
+          this.hiddenSuccess = false;          
+        }, error => {
+          console.log(error);
+          this.hiddenError = false;
+        }
+      );      
+  }
+
+  onNoClick(){
+    this.dialogRef.close();
   }
 }

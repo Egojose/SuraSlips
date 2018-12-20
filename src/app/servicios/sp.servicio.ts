@@ -154,4 +154,11 @@ export class SPServicio {
             EstadoFlujo: "Reasignado"
         });
     }
+
+    actualizarColumnaEnvioCliente(slip: Slip){
+        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
+            EnvioCliente: true,
+            EstadoFlujo: "Enviado al cliente"
+        })
+    }
 }

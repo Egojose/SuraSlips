@@ -34,3 +34,12 @@ body {
 .alertas {
     margin-top: 5%;
 }
+
+.colorTituloCard {
+    background-color: #dcdcdc;
+}
+
+.botonera-envio-cliente {
+    float: right;
+    margin-top: 10px;
+}
