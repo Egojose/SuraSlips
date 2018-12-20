@@ -1,10 +1,16 @@
 export class Formato {
-    constructor(public title: string, public FieldValuesAsText: any, public id: number, public name?: string) {
+    constructor(public title: string, 
+        public FieldValuesAsText: any, 
+        public id: number, 
+        public name?: string) {
 
     }
 
     public static fromJson(element: any) {
-        return new Formato(element.Title, element.FieldValuesAsText, element.ID, this.obtenerNombreDocumento(element));
+        return new Formato(element.Title, 
+            element.FieldValuesAsText, 
+            element.ID, 
+            this.obtenerNombreDocumento(element));
     }
 
     static obtenerNombreDocumento(element: any): string {

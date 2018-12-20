@@ -24,8 +24,6 @@ export class EditarSolicitudComponent implements OnInit {
   //Calendarios
   colorTheme = 'theme-blue';
   bsConfig: Partial<BsDatepickerConfig>;
-  minDate: Date;
-  maxDate: Date;
   loading: boolean;
 
   public modalRef: BsModalRef;
@@ -53,10 +51,6 @@ export class EditarSolicitudComponent implements OnInit {
     private servicioModal: BsModalService,
     private router: Router) {
     setTheme('bs4');
-    this.minDate = new Date();
-    this.maxDate = new Date();
-    this.minDate.setDate(this.minDate.getDate());
-    this.maxDate.setDate(this.maxDate.getDate() + 365000);
     this.loading = true;
   }
 
@@ -218,7 +212,7 @@ export class EditarSolicitudComponent implements OnInit {
     let valorCorreo = this.registerForm.controls["correo"].value;
     let valorCorreo2 = this.registerForm.controls["correo2"].value;
     let valorCorreo3 = this.registerForm.controls["correo3"].value;
-    this.slipActualizar = new Slip("", null, valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3,"");
+    this.slipActualizar = new Slip("", null, valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, null);
     this.slipActualizar.id = this.slip.id;
     if (valorLabelCliente == "") {
       this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);

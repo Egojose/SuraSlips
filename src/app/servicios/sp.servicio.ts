@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
-import { default as pnp, ItemAddResult, CamlQuery } from 'sp-pnp-js';
+import { default as pnp, CamlQuery } from 'sp-pnp-js';
 import { environment } from '../../environments/environment';
 import { Slip } from '../dominio/slip';
 
@@ -23,7 +23,7 @@ export class SPServicio {
             headers: {
                 "Accept": "application/json; odata=verbose",
                 'Content-Type': 'application/json;odata=verbose',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDUyMzA5ODYsIm5iZiI6MTU0NTIzMDk4NiwiZXhwIjoxNTQ1MjYwMDg2LCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.pnbgD89XDR9MVpVfHi2yR0SklpWQtcJ9kfg5YFgMZ0n3jKNdz4KUxaFParyH-eHMfzfLg6Tzic7CNYGzRcg_Q_iCbmFIl4dsAagoaf0KUQL8Y7yF0HaTxI-0urqnX4DGXzn28wedNMufitVRJrOOFx1eAa8hqeofW933HxNIgxuAEJz6orHlwEg-U-WsJBs0RJK5FsAxfpEsGpvuuXAlX7hHowc3mAc2gnMd18vL415nriy6bj8s5BX2UGRqavi7OuSWX0TNV0xLIVo6NCle9WPols4qGPuMNexWS7I-wXC1FjQpGfh0vM8F35q92fQZou-tH1VFrSfUeuSXQQ-DEw'
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDUzMTc2NjcsIm5iZiI6MTU0NTMxNzY2NywiZXhwIjoxNTQ1MzQ2NzY3LCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.LrJOc_DWWuUDi0iDdVw7j5nsMSPRPju1NGaWqIKbDcD6eSNgCa7uywl4NGjOVbXD_5NWohBWd_VttM4YenBSlouGbuWCJsekQb5htZs9anRWxHdsmOYa2DFZjIVSQeg4CQ5VK4gC6-O_w3R23xry6UxkTlOXzBSm74wkw6fMEHT7vyebQobbTKSMMdPpdyDA3qFcpWLrjz2ym4fIAxXmC5HQthRYEGrXxxDwElGLvkSPi8jTDsDHpYCE97h1AiA1dr9Ri58bxxogJp6GV2BcBwmmxpl94Hp4ceBkIpHvF2WEJR5---gDdhYFgl2m6TBYAmq51aHmPEW0XCI4gS9s-g'
             }
         }, environment.urlWeb);
 
@@ -150,7 +150,8 @@ export class SPServicio {
 
     actualizarColumnaReasignar(slip: Slip, usuarioId: number) {
         return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
-            CreadorSlipId: usuarioId
+            CreadorSlipId: usuarioId,
+            EstadoFlujo: "Reasignado"
         });
     }
 }

@@ -24,7 +24,7 @@
           <div class='form-group'>
             <label for="fecha-renovacion">Fecha de renovación</label>
             <input formControlName="fechaRenovacion" type="text" placeholder="Fecha de renovación" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }" [minDate]="minDate" [maxDate]="maxDate"
+              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }"
               #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
             <div *ngIf="submitted && f.fechaRenovacion.errors" class="invalid-feedback">
               <div *ngIf="f.fechaRenovacion.errors.required">La fecha de renovación es requerida</div>
@@ -172,7 +172,7 @@
         <div class="col-sm-4">
           <label for="tipo-formato">Formato de SLIP</label>
           <select formControlName="tipoFormato" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipoFormato.errors }" disabled>
-            <option *ngFor="let formato of formatos" [value]="formato.FieldValuesAsText.FileRef" [text]="formato.name">{{formato.name}}
+            <option *ngFor="let formato of formatos" [value]="formato.FieldValuesAsText.FileRef" [text]="formato.title">{{formato.title}}
             </option>
           </select>
           <div *ngIf="submitted && f.tipoFormato.errors" class="invalid-feedback">

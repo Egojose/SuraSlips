@@ -25,8 +25,6 @@ export class CrearSolicitudComponent implements OnInit {
   //Calendarios
   colorTheme = 'theme-blue';
   bsConfig: Partial<BsDatepickerConfig>;
-  minDate: Date;
-  maxDate: Date;
   loading: boolean;
 
   public modalRef: BsModalRef;
@@ -52,10 +50,6 @@ export class CrearSolicitudComponent implements OnInit {
     private servicioModal: BsModalService,
     private router: Router) {
     setTheme('bs4');
-    this.minDate = new Date();
-    this.maxDate = new Date();
-    this.minDate.setDate(this.minDate.getDate());
-    this.maxDate.setDate(this.maxDate.getDate() + 365000);
     this.loading = true;
   }
 
