@@ -56,7 +56,6 @@ export class MisSolicitudesComponent implements OnInit {
         else {
           this.empty = true;
         }
-
       }, err => {
         console.log('Error obteniendo mis slips: ' + err);
       }
@@ -82,8 +81,8 @@ export class MisSolicitudesComponent implements OnInit {
     this.dialog.open(modalHistorialVersiones, {
       height: '400px',
       width: '700px',
-    });    
-  } 
+    });
+  }
 
   ReasignarSlip(slip) {
     sessionStorage.setItem('slip', JSON.stringify(slip));
@@ -93,13 +92,13 @@ export class MisSolicitudesComponent implements OnInit {
     });
   }
 
-  EnvioCliente(slip) {    
+  EnvioCliente(slip) {
     sessionStorage.setItem('slip', JSON.stringify(slip));
     const dialogRef = this.dialog.open(modalEnvioCliente, {
       height: '380px',
       width: '600px',
     });
-  } 
+  }
 }
 
 @Component({
@@ -146,7 +145,6 @@ export class modalReasignar {
       return;
     }
 
-    console.log("El id del usuario es: " + this.ReasignarId);
     this.servicio.actualizarColumnaReasignar(this.slip, this.ReasignarId).then(
       (respuesta) => {
         this.hiddenSuccess = false;
@@ -190,7 +188,7 @@ export class modalHistorialVersiones {
     this.slip = JSON.parse(sessionStorage.getItem('slip'));
   }
 
-  ObtenerVersionesDocumento(){
+  ObtenerVersionesDocumento() {
     this.servicio.obtenerVersiones(this.slip).subscribe(
       (Response) => {
         console.log(Response);
@@ -219,28 +217,28 @@ export class modalEnvioCliente {
   ObjSlip: Slip;
   hiddenSuccess: boolean;
   hiddenError: boolean;
-  
+
   constructor(private servicio: SPServicio, public dialogRef: MatDialogRef<modalEnvioCliente>) {
-      this.hiddenSuccess=true;
-      this.hiddenError=true;
+    this.hiddenSuccess = true;
+    this.hiddenError = true;
   }
 
   ngOnInit(): void {
-        this.ObjSlip = JSON.parse(sessionStorage.getItem('slip'));
+    this.ObjSlip = JSON.parse(sessionStorage.getItem('slip'));
   }
 
-  EnviarSLIP(){      
-      this.servicio.actualizarColumnaEnvioCliente(this.ObjSlip).then(
-        (respuesta) => {
-          this.hiddenSuccess = false;          
-        }, error => {
-          console.log(error);
-          this.hiddenError = false;
-        }
-      );      
+  EnviarSLIP() {
+    this.servicio.actualizarColumnaEnvioCliente(this.ObjSlip).then(
+      (respuesta) => {
+        this.hiddenSuccess = false;
+      }, error => {
+        console.log(error);
+        this.hiddenError = false;
+      }
+    );
   }
 
-  onNoClick(){
+  onNoClick() {
     this.dialogRef.close();
   }
 }
