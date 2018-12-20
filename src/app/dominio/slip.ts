@@ -20,6 +20,7 @@ export class Slip {
         public urlcompartir?: string,
         public documentoId?: number,
         public envioCliente?: boolean,
+        public estadoFlujo?: string,
         public id?: number) { }
 
     public static fromJson(element: any) {
@@ -44,6 +45,7 @@ export class Slip {
             (element.UrlCompartir != null) ? element.UrlCompartir: "",
             (element.IDSlipDocumento != null) ? element.IDSlipDocumento: null,
             (element.EnvioCliente != null) ? element.EnvioCliente: "",
+            (element.EstadoFlujo != null) ? element.EstadoFlujo: "",
             element.ID);
     }
 

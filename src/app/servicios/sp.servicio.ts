@@ -118,7 +118,7 @@ export class SPServicio {
     }
 
     obtenerMisSlips(usuarioId: number) {
-        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlips).items.select("ID", "Title", "Cliente", "DNICliente", "FechaRenovacion", "TipoNegocio", "EstadoSlip", "TipoGestion", "Responsable", "Correo1", "Correo2", "Correo3", "FormatoSLIP", "TipoIdentificacionCliente", "UrlCompartir", "Created", "Modified", "CreadorSlip/Title", "Editor/Title", "EnvioCliente", "IDSlipDocumento").expand("CreadorSlip", "Editor").filter("CreadorSlip eq " + usuarioId + " ").get());
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlips).items.select("ID", "Title", "Cliente", "DNICliente", "FechaRenovacion", "TipoNegocio", "EstadoSlip", "TipoGestion", "Responsable", "Correo1", "Correo2", "Correo3", "FormatoSLIP", "TipoIdentificacionCliente", "UrlCompartir", "Created", "Modified", "CreadorSlip/Title", "Editor/Title", "EnvioCliente", "IDSlipDocumento", "EstadoFlujo").expand("CreadorSlip", "Editor").filter("CreadorSlip eq " + usuarioId + " ").get());
         return respuesta;
     }
 

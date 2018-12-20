@@ -15,10 +15,6 @@ import { historialVersiones } from '../dominio/historialVersiones';
 
 export class MisSolicitudesComponent implements OnInit {
 
-  constructor(private servicio: SPServicio, private router: Router, public dialog: MatDialog) {
-
-  }
-
   displayedColumns: string[] = ['nombreCliente', 'fechaCreacion', 'fechaRenovacion', 'diasTranscurridos', 'tipoNegocio', 'estado', 'menu'];
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,6 +22,11 @@ export class MisSolicitudesComponent implements OnInit {
   usuarioActual: Usuario;
   misSlips: Slip[] = [];
   empty;
+  ocultar;
+
+  constructor(private servicio: SPServicio, private router: Router, public dialog: MatDialog) {
+    this.ocultar = true;
+  }
 
   ngOnInit() {
     this.ObtenerUsuarioActual();
@@ -175,6 +176,7 @@ export class modalHistorialVersiones {
   dsHistorialVersiones: any;
   ObjHistorialVersiones: historialVersiones[] = [];
   constructor(private servicio: SPServicio) {
+
 
   }
 

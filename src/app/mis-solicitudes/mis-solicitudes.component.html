@@ -41,7 +41,7 @@
     <ng-container matColumnDef="menu">
       <th mat-header-cell *matHeaderCellDef> Menú Acciones </th>
       <td mat-cell *matCellDef="let element">
-          <button class="btn btn primary" mat-button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
+          <button [hidden]="element.estadoFlujo == 'Cerrado' " class="btn btn primary" mat-button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="abrirDocumentoSlip(element)">Editar documento Slip</button>
             <button mat-menu-item (click)="editarPropiedadesSlip(element)">Editar propiedades Slip</button>
