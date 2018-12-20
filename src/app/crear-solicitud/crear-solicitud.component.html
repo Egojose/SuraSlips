@@ -1,10 +1,11 @@
+<div class="row form-group"></div>
 <div class="container">
   <div class="loading" *ngIf='loading'>
     <img class="img-logo" src="/sites/intranet/negocio/seguros/slips/ImagenesSlips/aplicacion/loading.gif" alt="loading...">
   </div>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit(template)">
-    <fieldset>
-      <legend>Datos generales del SLIP</legend>
+    <fieldset class="scheduler-border">
+      <legend class="scheduler-border">Datos generales del SLIP</legend>
       <div class='row'>
         <div class='col-sm-4'>
           <div class='form-group'>
@@ -24,8 +25,8 @@
           <div class='form-group'>
             <label for="fecha-renovacion">Fecha de renovación</label>
             <input formControlName="fechaRenovacion" type="text" placeholder="Fecha de renovación" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }"
-              #dp="bsDatepicker" bsDatepicker [bsConfig]="bsConfig">
+              [ngClass]="{ 'is-invalid': submitted && f.fechaRenovacion.errors }" #dp="bsDatepicker" bsDatepicker
+              [bsConfig]="bsConfig">
             <div *ngIf="submitted && f.fechaRenovacion.errors" class="invalid-feedback">
               <div *ngIf="f.fechaRenovacion.errors.required">La fecha de renovación es requerida</div>
             </div>
@@ -181,16 +182,21 @@
             <div *ngIf="f.tipoFormato.errors.required">Debe seleccionar un tipo de formato</div>
           </div>
         </div>
+      </div>
 
-      </div>
-    </fieldset>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Guardar Slip</button>
+      <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <div class="guardar-slip">
+                <button type="submit" class="guardar-slip-btn btn btn-primary">Guardar Slip</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+
+    </fieldset>
+
+
   </form>
 </div>
 

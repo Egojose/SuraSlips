@@ -15,18 +15,18 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="alertas"   [hidden]="hiddenSuccess">
+            <div class="alertas" [hidden]="hiddenSuccess">
                 <alert type="success">
-                    <strong>El SLIP  se ha enviado correctamente</strong>
-                    </alert>
-        </div>
-        <div class="alertas"   [hidden]="hiddenError">
-            <alert type="danger">
-                <strong>Ha ocurrido un error, inténtelo más tarde o comuníquese con el administrador</strong>
+                    <strong>El SLIP se ha enviado correctamente</strong>
                 </alert>
+            </div>
+            <div class="alertas" [hidden]="hiddenError">
+                <alert type="danger">
+                    <strong>Ha ocurrido un error, inténtelo más tarde o comuníquese con el administrador</strong>
+                </alert>
+            </div>
+        </div>
     </div>
-</div>
-</div>
 </div>
 <div mat-dialog-actions class="botonera-envio-cliente">
     <button mat-button (click)="onNoClick()">Cancelar</button>

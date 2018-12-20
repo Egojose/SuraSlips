@@ -22,10 +22,10 @@ export class MisSolicitudesComponent implements OnInit {
   usuarioActual: Usuario;
   misSlips: Slip[] = [];
   empty;
-  ocultar;
+  loading: boolean;
 
   constructor(private servicio: SPServicio, private router: Router, public dialog: MatDialog) {
-    this.ocultar = true;
+    this.loading = true;
   }
 
   ngOnInit() {
@@ -53,9 +53,11 @@ export class MisSolicitudesComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.misSlips);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.loading = false;
         }
         else {
           this.empty = true;
+          this.loading = false;
         }
       }, err => {
         console.log('Error obteniendo mis slips: ' + err);
@@ -97,6 +99,14 @@ export class MisSolicitudesComponent implements OnInit {
     sessionStorage.setItem('slip', JSON.stringify(slip));
     const dialogRef = this.dialog.open(modalEnvioCliente, {
       height: '380px',
+      width: '600px',
+    });
+  }
+
+  cerrarSlip(slip) {
+    sessionStorage.setItem('slip', JSON.stringify(slip));
+    const dialogRef = this.dialog.open(modalCerrarSlip, {
+      height: '400px',
       width: '600px',
     });
   }
@@ -233,14 +243,95 @@ export class modalEnvioCliente {
     this.servicio.actualizarColumnaEnvioCliente(this.ObjSlip).then(
       (respuesta) => {
         this.hiddenSuccess = false;
-      }, error => {
+        setTimeout(function () { window.location.href = "/"; }, 2000);
+      }).catch((error) => {
         console.log(error);
         this.hiddenError = false;
-      }
-    );
+      });
   }
 
   onNoClick() {
     this.dialogRef.close();
   }
+}
+
+@Component({
+  selector: 'modalCerrarSlip',
+  templateUrl: 'modalCerrarSlip.html',
+  styleUrls: ['./mis-solicitudes.component.css']
+})
+
+export class modalCerrarSlip {
+  ObjSlip: Slip;
+  hiddenSuccess: boolean;
+  hiddenError: boolean;
+  accion: string;
+  BtnsoloLectura: boolean;
+
+  constructor(private servicio: SPServicio, public dialogRef: MatDialogRef<modalCerrarSlip>) {
+    this.hiddenSuccess = true;
+    this.hiddenError = true;
+    this.BtnsoloLectura = false;
+  }
+
+  ngOnInit(): void {
+    this.ObjSlip = JSON.parse(sessionStorage.getItem('slip'));
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
+  }
+
+  renovado() {
+    this.servicio.actualizarEstadoSlip(this.ObjSlip, "Renovado").then(
+      (resultado) => {
+        this.accion = "El SLIP fue cerrado con estado Renovado";
+        this.hiddenSuccess = false;
+        this.BtnsoloLectura = true;
+        setTimeout(function () { window.location.href = "/"; }, 2000);
+      }).catch((error) => {
+        console.log(error);
+        this.hiddenError = false;
+      });
+  }
+
+  noRenovado() {
+    this.servicio.actualizarEstadoSlip(this.ObjSlip, "No renovado").then(
+      (resultado) => {
+        this.accion = "El SLIP fue cerrado con estado No renovado";
+        this.hiddenSuccess = false;
+        this.BtnsoloLectura = true;
+        setTimeout(function () { window.location.href = "/"; }, 2000);
+      }).catch((error) => {
+        console.log(error);
+        this.hiddenError = false;
+      });
+  }
+
+  ganado() {
+    this.servicio.actualizarEstadoSlip(this.ObjSlip, "Ganado").then(
+      (resultado) => {
+        this.accion = "El SLIP fue cerrado con estado Ganado";
+        this.hiddenSuccess = false;
+        this.BtnsoloLectura = true;
+        setTimeout(function () { window.location.href = "/"; }, 2000);
+      }).catch((error) => {
+        console.log(error);
+        this.hiddenError = false;
+      });
+  }
+
+  noGanado() {
+    this.servicio.actualizarEstadoSlip(this.ObjSlip, "No ganado").then(
+      (resultado) => {
+        this.accion = "El SLIP fue cerrado con estado No ganado";
+        this.hiddenSuccess = false;
+        this.BtnsoloLectura = true;
+        setTimeout(function () { window.location.href = "/"; }, 2000);
+      }).catch((error) => {
+        console.log(error);
+        this.hiddenError = false;
+      });
+  }
+
 }

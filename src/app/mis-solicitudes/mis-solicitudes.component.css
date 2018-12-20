@@ -43,3 +43,39 @@ body {
     float: right;
     margin-top: 10px;
 }
+
+.mobile-label {
+  display: none;
+}
+
+.example-button-row button,
+.example-button-row a {
+    margin-right: 8px;
+}
+
+.btnSuccess {
+    background-color: #1e7e34 !important;
+}
+
+.btnError {
+    background-color: #ffc107 !important;
+}
+
+@media(max-width: 600px) {
+  .mobile-label {
+    width: 80px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row { 
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+  }
+}
+

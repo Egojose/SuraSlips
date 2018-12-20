@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
 import { EditarSolicitudComponent } from './editar-solicitud/editar-solicitud.component';
 import { DescargarPlantillasComponent } from './descargar-plantillas/descargar-plantillas.component';
-import { MisSolicitudesComponent, modalReasignar, modalHistorialVersiones, modalEnvioCliente } from './mis-solicitudes/mis-solicitudes.component';
+import { MisSolicitudesComponent, modalReasignar, modalHistorialVersiones, modalEnvioCliente, modalCerrarSlip } from './mis-solicitudes/mis-solicitudes.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { SPServicio } from './servicios/sp.servicio';
@@ -32,9 +32,10 @@ import { SuraServicio } from './servicios/sura.servicio';
     NumberDirective,
     modalReasignar,
     modalHistorialVersiones,
-    modalEnvioCliente
+    modalEnvioCliente,
+    modalCerrarSlip
   ],
-  entryComponents: [modalReasignar, modalHistorialVersiones, modalEnvioCliente],
+  entryComponents: [modalReasignar, modalHistorialVersiones, modalEnvioCliente, modalCerrarSlip],
   imports: [
     BrowserModule,
     HttpClientModule,

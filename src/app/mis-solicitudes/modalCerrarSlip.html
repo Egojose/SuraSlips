@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Cerrar SLIP</h2>
+<hr>
+<div mat-dialog-content>
+    <h5>Tipo de negocio: {{ObjSlip.tipoNegocio}}</h5>
+    <br>
+    <p>Seleccione el estado de cierre del SLIP</p>    
+    <div class="alertas" [hidden]="hiddenError">
+        <alert type="danger">
+            <strong>Ha ocurrido un error, inténtelo más tarde o comuníquese con el administrador</strong>
+        </alert>
+    </div>
+    <div class="alertas" [hidden]="hiddenSuccess">
+        <alert type="success">
+            <strong>{{accion}}</strong>
+        </alert>
+    </div>
+    <div class="example-button-row" *ngIf="ObjSlip.tipoNegocio == 'Renovación'">
+        <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+        <button mat-raised-button color="primary" class="btnSuccess" (click)="renovado()" [disabled]="BtnsoloLectura">Renovado</button>
+        <button mat-raised-button color="primary" class="btnError" (click)="noRenovado()" [disabled]="BtnsoloLectura">No renovado</button>
+    </div>
+    <div class="example-button-row" *ngIf="ObjSlip.tipoNegocio == 'Negocio Nuevo'">
+        <button mat-button (click)="onNoClick()">Cancelar</button>
+        <button mat-raised-button color="primary" class="btnSuccess" (click)="ganado()" [disabled]="BtnsoloLectura">Ganado</button>
+        <button mat-raised-button color="primary" class="btnError" (click)="noGanado()" [disabled]="BtnsoloLectura">No ganado</button>
+    </div>
+</div>

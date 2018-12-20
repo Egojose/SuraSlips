@@ -161,4 +161,11 @@ export class SPServicio {
             EstadoFlujo: "Enviado al cliente"
         })
     }
+
+    actualizarEstadoSlip(slip: Slip, EstadoSlip){
+        return this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
+            EstadoSlip: EstadoSlip,
+            EstadoFlujo: "Cerrado"
+        })
+    }
 }
