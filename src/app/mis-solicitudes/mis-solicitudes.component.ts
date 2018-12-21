@@ -98,7 +98,7 @@ export class MisSolicitudesComponent implements OnInit {
   EnvioCliente(slip) {
     sessionStorage.setItem('slip', JSON.stringify(slip));
     const dialogRef = this.dialog.open(modalEnvioCliente, {
-      height: '380px',
+      height: '420px',
       width: '600px',
     });
   }
@@ -230,7 +230,7 @@ export class modalEnvioCliente {
   hiddenSuccess: boolean;
   hiddenError: boolean;
 
-  constructor(private servicio: SPServicio, public dialogRef: MatDialogRef<modalEnvioCliente>) {
+  constructor(private servicio: SPServicio,  private routerEnvioCliente: Router, public dialogRef: MatDialogRef<modalEnvioCliente>) {
     this.hiddenSuccess = true;
     this.hiddenError = true;
   }
@@ -248,6 +248,12 @@ export class modalEnvioCliente {
         console.log(error);
         this.hiddenError = false;
       });
+  }
+
+  editarSlipEnvioCliente(slip){
+    sessionStorage.setItem('slip', JSON.stringify(slip));
+    this.routerEnvioCliente.navigate(["/editar-solicitud"]);
+    this.onNoClick();
   }
 
   onNoClick() {
