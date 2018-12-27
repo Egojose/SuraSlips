@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SuraServicio {
 
-  private loginUrl: string = 'https://login.salesforce.com/services/oauth2/token';
+  private loginUrl: string = '/services/oauth2/token';
   private suraUrlService: string = 'https://sura.my.salesforce.com';
 
   constructor(private http: HttpClient) { }
@@ -19,7 +19,7 @@ export class SuraServicio {
     formData.append('client_secret', '3916059708823542084');
     formData.append('username', 'integrasurasfdcdemo@sura.com.co');
     formData.append('password', 'Sura2012');
-    return this.http.post<any>(this.loginUrl,formData);
+    return this.http.post<any>(this.loginUrl, formData);
   }
 
   obtenerClientePorDNI(token: string, dni: string){

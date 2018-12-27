@@ -1,0 +1,7 @@
+{
+    "/services/oauth2/token/": {
+        "target": "https://login.salesforce.com",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
