@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SuraServicio {
 
-  private loginUrl: string = '/services/oauth2/token';
+  private loginUrl: string = 'https://login.salesforce.com/services/oauth2/token';
   private suraUrlService: string = 'https://sura.my.salesforce.com';
 
   constructor(private http: HttpClient) { }

@@ -54,15 +54,14 @@ export class MisSolicitudesComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.loading = false;
-        }
-        else {
+        } else {
           this.empty = true;
           this.loading = false;
         }
       }, err => {
         console.log('Error obteniendo mis slips: ' + err);
       }
-    )
+    );
   }
 
   applyFilter(filterValue: string) {
@@ -71,11 +70,17 @@ export class MisSolicitudesComponent implements OnInit {
 
   editarPropiedadesSlip(slip) {
     sessionStorage.setItem('slip', JSON.stringify(slip));
-    this.router.navigate(["/editar-solicitud"]);
+    this.router.navigate(['/editar-solicitud']);
   }
 
   abrirDocumentoSlip(slip) {
-    window.open(slip.urlcompartir, "_blank");
+    if (!slip.urlcompartir) {
+      alert('Aún no se ha creado el documento, por favor intente de nuevo en unos minutos.');
+      location.reload();
+      return;
+    }
+
+    window.open(slip.urlcompartir, '_blank');
   }
 
   obtenerVersiones(slip) {

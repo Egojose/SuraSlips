@@ -10,8 +10,8 @@ export const environment = {
   listaTipoResponsables: "TipoResponsable",
   listaCategorias: "CategoriasSlips",
   bibliotecaSlips: "GestionSLIPS",
-  listaSlips: "Slips"
-
+  listaSlips: "Slips",
+  listaTemporal: 'Clientes'
 };
 
 

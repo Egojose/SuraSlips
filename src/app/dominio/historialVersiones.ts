@@ -12,7 +12,7 @@ export class historialVersiones {
         if (this.versionSthc == 0) {
             let numero = element.VersionLabel;
             let FechaModificacion = element.Modified;
-            let modificadoPor = element.Author.LookupValue;
+            let modificadoPor = element.Editor.LookupValue;
             let UrlDoc = environment.urlWeb + "/GestionSLIPS/" + element.FileLeafRef;
             this.versionSthc = 1;
             return new historialVersiones(numero, FechaModificacion, modificadoPor, UrlDoc);

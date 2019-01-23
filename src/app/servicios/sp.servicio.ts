@@ -11,19 +11,19 @@ export class SPServicio {
     public obtenerConfiguracion() {
         const configuracionSharepoint = pnp.sp.configure({
             headers: {
-                "Accept": "application/json; odata=verbose"
+                'Accept': 'application/json; odata=verbose'
             }
         }, environment.urlWeb);
 
         return configuracionSharepoint;
     }
 
-    public ObtenerConfiguracionConPost() {
+    public obtenerConfiguracionConPost() {
         const configuracionSharepoint = pnp.sp.configure({
             headers: {
-                "Accept": "application/json; odata=verbose",
+                'Accept': 'application/json; odata=verbose',
                 'Content-Type': 'application/json;odata=verbose',
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDU5MjMxNDEsIm5iZiI6MTU0NTkyMzE0MSwiZXhwIjoxNTQ1OTUyMjQxLCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.DlgZSXUtdeH-WVOdxQlWxckdIpMeKayqTGwSc2Mz3dgsucs982FFfarv15juGnpBF1e2s1s0X4Iif5hdyz_IIzXxlg9356dX088Gl2vcQrc6H9_UaG-yKRv6XqqseoSYFaUrjUSxTAcB9r-Hp6bHDPXyr_8oANTJszE1iku2I8vOtTN0vDeDNmc1Puzsyn7UjKBdHEenfFz5iKOcU6jKtQgKbT-S7yA_lZZR_oAEumcsA7hrhJKdsCvI2T2Rv0T5VJxygz4tBO-zuqgCbwMp873-zl5Gll3q4mCNlmY24AQKy806H0-l9SlCc9JOiAsY2D_HQXchGygB2JgmTzX7DA'
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvc3VyYW1lcmljYW5hLnNoYXJlcG9pbnQuY29tQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsImlzcyI6IjAwMDAwMDAxLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMEAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJpYXQiOjE1NDcwNTkzMDQsIm5iZiI6MTU0NzA1OTMwNCwiZXhwIjoxNTQ3MDg4NDA0LCJpZGVudGl0eXByb3ZpZGVyIjoiMDAwMDAwMDEtMDAwMC0wMDAwLWMwMDAtMDAwMDAwMDAwMDAwQDNjMGJkNGZlLTExMTEtNGQxMy04ZTBjLTdjMzNiOWViNzU4MSIsIm5hbWVpZCI6IjRmNjQ0ODkyLWFkN2ItNDZjMC1hMGU0LTAzNjVhMzk2NWFmZUAzYzBiZDRmZS0xMTExLTRkMTMtOGUwYy03YzMzYjllYjc1ODEiLCJvaWQiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJzdWIiOiIyNmIwOTQxNC1hNDRlLTQ5NjMtYmY5MC04ZTlkMTI4ZjA4ZDQiLCJ0cnVzdGVkZm9yZGVsZWdhdGlvbiI6ImZhbHNlIn0.cB-mMiQAT8vHblkOOwxph2mGdyyNlMPxiWT7qAdkhNC5Sd89lLE6SpbT7t5pSqKLCPDPR7ueTTJBazkZofV5jzNkL1eiiGj3dgR8yFq0m14CRiN5c9NOoi6HDak9YUo0fpvzL4QMH_m-97kV1-cn0P14Aa5jZwYQmzw9eXZl_QlGGwfNe4lYzdvqFZ00i8OeLBqlbuhgN7Jq92g1dMQ3Lid_YQgH4vy4V9ouEpmAeGe87SEfJ4Qrp4nBMDpxwTmoJkQWS6ChmNpWSbcLN1hGVxaYEbG54TniVmJlhINpiHhpL1a_5KiDZAbSiGiw4YX2OJgJleRRhgfU3gvW1-cM6A'
             }
         }, environment.urlWeb);
 
@@ -36,12 +36,12 @@ export class SPServicio {
     }
 
     ObtenerUsuarioActual() {
-        let respuesta = from(this.ObtenerConfiguracionConPost().web.currentUser.get());
+        let respuesta = from(this.obtenerConfiguracion().web.currentUser.get());
         return respuesta;
     }
 
     ObtenerTipoNegocio() {
-        let respuesta = from(this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaTipoNegocio).items.getAll());
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoNegocio).items.getAll());
         return respuesta;
     }
 
@@ -79,12 +79,12 @@ export class SPServicio {
     }
 
     ObtenerTiposGestion() {
-        let respuesta = from(this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaTipoGestion).items.getAll());
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoGestion).items.getAll());
         return respuesta;
     }
 
     ObtenerTipoResponsables() {
-        let respuesta = from(this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaTipoResponsables).items.getAll());
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTipoResponsables).items.getAll());
         return respuesta;
     }
 
@@ -104,7 +104,7 @@ export class SPServicio {
     }
 
     ObtenerFormatosSlips() {
-        let respuesta = from(this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.bibliotecaPlantillas).items.select("FieldValuesAsText/FileRef", "Title", "ID").expand("FieldValuesAsText").get());
+        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaPlantillas).items.select("FieldValuesAsText/FileRef", "Title", "ID").expand("FieldValuesAsText").get());
         return respuesta;
     }
 
@@ -118,17 +118,20 @@ export class SPServicio {
     }
 
     obtenerMisSlips(usuarioId: number) {
-        let respuesta = from(this.ObtenerConfiguracionConPost().web.lists.getByTitle(environment.listaSlips).items.select("ID", "Title", "Cliente", "DNICliente", "FechaRenovacion", "TipoNegocio", "EstadoSlip", "TipoGestion", "Responsable", "Correo1", "Correo2", "Correo3", "FormatoSLIP", "TipoIdentificacionCliente", "UrlCompartir", "Created", "Modified", "CreadorSlip/Title", "Editor/Title", "EnvioCliente", "IDSlipDocumento", "EstadoFlujo").expand("CreadorSlip", "Editor").filter("CreadorSlip eq " + usuarioId + " ").get());
+        const respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlips)
+                            .items.select("ID", "Title", "Cliente", "DNICliente", "FechaRenovacion", "TipoNegocio", "EstadoSlip", "TipoGestion", "Responsable", "Correo1", "Correo2", "Correo3", "FormatoSLIP", "TipoIdentificacionCliente", "UrlCompartir", "Created", "Modified", "CreadorSlip/Title", "Editor/Title", "EnvioCliente", "IDSlipDocumento", "EstadoFlujo")
+                            .expand('CreadorSlip', 'Editor').filter('CreadorSlip eq ' + usuarioId + ' ').get());
         return respuesta;
     }
 
     obtenerVersiones(slip: Slip) {
-        let respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips).items.getById(slip.documentoId).versions.get());
+        const respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.bibliotecaSlips)
+                            .items.getById(slip.documentoId).versions.get());
         return respuesta;
     }
 
     obtenerIntegrantesSlip() {
-        let respuesta = from(this.obtenerConfiguracion().web.siteGroups.getByName("Integrantes de la Gestión de Slips").users.get());
+        const respuesta = from(this.obtenerConfiguracion().web.siteGroups.getByName('Integrantes de la Gestión de Slips').users.get());
         return respuesta;
     }
 
@@ -151,21 +154,28 @@ export class SPServicio {
     actualizarColumnaReasignar(slip: Slip, usuarioId: number) {
         return this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
             CreadorSlipId: usuarioId,
-            EstadoFlujo: "Reasignado"
+            EstadoFlujo: 'Reasignado'
         });
     }
 
-    actualizarColumnaEnvioCliente(slip: Slip){
+    actualizarColumnaEnvioCliente(slip: Slip) {
         return this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
             EnvioCliente: true,
-            EstadoFlujo: "Enviado al cliente"
-        })
+            EstadoFlujo: 'Enviado al cliente'
+        });
     }
 
-    actualizarEstadoSlip(slip: Slip, EstadoSlip){
+    actualizarEstadoSlip(slip: Slip, EstadoSlip) {
         return this.obtenerConfiguracion().web.lists.getByTitle(environment.listaSlips).items.getById(slip.id).update({
             EstadoSlip: EstadoSlip,
-            EstadoFlujo: "Cerrado"
-        })
+            EstadoFlujo: 'Cerrado'
+        });
+    }
+
+    obtenerClienteDesdeListaLocal(dni: string) {
+        const id = dni.substring(1);
+        const respuesta = from(this.obtenerConfiguracion().web.lists.getByTitle(environment.listaTemporal)
+                            .items.filter(`substringof('${id}', Identificacion)`).get());
+        return respuesta;
     }
 }

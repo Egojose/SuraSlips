@@ -100,15 +100,15 @@
         <div class="col-sm-6">
           <div id="zonaEstado" [hidden]="!mostrarDivEstado" class="form-group">
             <div id="zonaEstado" [hidden]="!mostrarDivEstado" class="form-group">
-              <mat-radio-group class="example-radio-group" formControlName="rdbEstado">
+              <mat-radio-group class="example-radio-group form" formControlName="rdbEstado" [ngClass]="{ 'is-invalid': submitted && f.rdbEstado.errors }">
                 <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado.title">
                   {{estado.title}}
                 </mat-radio-button>
               </mat-radio-group>
-            </div>
-            <div *ngIf="submitted && f.rdbEstado.errors" class="invalid-feedback">
-              <div>Debe seleccionar un estado</div>
-            </div>
+              <div *ngIf="submitted && f.rdbEstado.errors" class="invalid-feedback">
+                <div *ngIf="f.rdbEstado.errors.required">Debe seleccionar un estado</div>
+              </div>
+            </div>            
           </div>
         </div>
       </div>

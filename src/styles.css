@@ -64,6 +64,14 @@ body {
     margin-top: 32px;
 }
 
+.close-sesion a {
+  float: right;
+  margin: 24px 0 0 15px;
+  background-color: #FC4237;
+  padding: 8px 10px;
+  color: white;
+}
+
 @media (max-width: 600px) {
     nav, article {
         width: 100%;
@@ -191,6 +199,17 @@ body {
       margin-right: -17px;
   }
 
+  #navbarNav .nav-link.active {
+    background-color: #01338A;
+    color: white !important;
+  }
 
+  #navbarNav .nav-link:hover {
+    background-color: #01338A99;
+    color: white !important;
+  }
 
+  .example-radio-group.is-invalid ~ .invalid-feedback {
+    display: block;
+  }
 

@@ -12,10 +12,10 @@ export class AppComponent {
   constructor(private servicio: SPServicio) { }
 
   title = 'Sura-Slips-Proyecto';
-  
-  idUsuario:number;
+  idUsuario: number;
   nombreUsuario: string;
   emailUsuario: string;
+  cerrarSesion: string;
 
   usuarioActual: Usuario;
 
@@ -29,12 +29,13 @@ export class AppComponent {
         this.idUsuario = Response.Id;
         this.nombreUsuario = Response.Title;
         this.emailUsuario = Response.Email;
+        this.cerrarSesion = '/sites/intranet/negocio/seguros/slips/';
         this.usuarioActual = new Usuario(this.idUsuario, this.nombreUsuario, this.emailUsuario);
-        sessionStorage.setItem('usuario',JSON.stringify(this.usuarioActual));
+        sessionStorage.setItem('usuario', JSON.stringify(this.usuarioActual));
       }, err => {
         console.log('Error obteniendo usuario: ' + err);
       }
-    )
+    );
   }
 
 }

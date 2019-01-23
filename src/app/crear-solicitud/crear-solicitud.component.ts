@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 })
 export class CrearSolicitudComponent implements OnInit {
 
-  //Calendarios
+  // Calendarios
   colorTheme = 'theme-blue';
   bsConfig: Partial<BsDatepickerConfig>;
   loading: boolean;
@@ -87,7 +87,7 @@ export class CrearSolicitudComponent implements OnInit {
         this.tiposNegocio = TipoNegocio.fromJsonList(Response);
         this.ObtenerTiposGestion();
       }
-    )
+    );
   }
 
   ObtenerTiposGestion() {
@@ -96,7 +96,7 @@ export class CrearSolicitudComponent implements OnInit {
         this.tiposGestion = TipoGestion.fromJsonList(Response);
         this.ObtenerFormatosSlips();
       }
-    )
+    );
   }
 
   ObtenerFormatosSlips() {
@@ -106,12 +106,12 @@ export class CrearSolicitudComponent implements OnInit {
         this.EstablecerValoresFormularios();
         this.loading = false;
       }
-    )
+    );
   }
 
   mostrarEstados(evento) {
     this.loading = true;
-    let opciones = event.target['options'];
+    let opciones = evento.target['options'];
     let indiceseleccionado = opciones.selectedIndex;
     this.tipoNegocio = opciones[indiceseleccionado].text;
     let idTipoNegocio = evento.target.value;
@@ -121,7 +121,7 @@ export class CrearSolicitudComponent implements OnInit {
         this.estados = Estado.fromJsonList(Response);
         this.loading = false;
       }
-    )
+    );
   }
 
   EstablecerValoresFormularios() {
@@ -150,12 +150,12 @@ export class CrearSolicitudComponent implements OnInit {
       if (tipoIdentificacionCliente == "Cédula de ciudadanía") {
         dniBuscar = "C" + dniCliente;
       }
-      if (tipoIdentificacionCliente == "Nit") {
-        dniBuscar = "A" + dniCliente;
+      if (tipoIdentificacionCliente === 'Nit') {
+        dniBuscar = 'A' + dniCliente;
       }
       this.obtenerDatosCliente(dniBuscar, template);
     } else {
-      if (tipoIdentificacionCliente == "") {
+      if (tipoIdentificacionCliente == '') {
         this.mostrarAlerta("Tipo de identificación del cliente está vacío", "Debes de seleccionar un tipo de identificación para poder buscar el cliente", template);
       } else {
         this.mostrarAlerta("DNI está vacío", "Debes escribir el DNI del cliente a buscar", template);
@@ -169,6 +169,18 @@ export class CrearSolicitudComponent implements OnInit {
     },
       error => {
         console.log(error);
+        console.log('Consulta en la lista local');
+
+        this.servicio.obtenerClienteDesdeListaLocal(dni).subscribe(respuesta => {
+          if (respuesta.length > 0) {
+            this.nombreCliente = respuesta[0].Title;
+            this.dniCliente = dni;
+          } else {
+            this.LimpiarDatosCliente();
+            this.mostrarAlerta('DNI inválido', 'No se encuentra un cliente con el DNI específicado', template);
+          }
+        });
+
       }
     );
   }
@@ -179,10 +191,9 @@ export class CrearSolicitudComponent implements OnInit {
       if (respuesta.totalSize > 0) {
         this.nombreCliente = respuesta.records[0].Name;
         this.dniCliente = respuesta.records[0].Id_Integracion__c;
-      }
-      else {
+      } else {
         this.LimpiarDatosCliente();
-        this.mostrarAlerta("DNI inválido", "No se encuentra un cliente con el DNI específicado", template);
+        this.mostrarAlerta('DNI inválido', 'No se encuentra un cliente con el DNI específicado', template);
       }
       this.loading = false;
     },
@@ -193,8 +204,8 @@ export class CrearSolicitudComponent implements OnInit {
   }
 
   LimpiarDatosCliente() {
-    this.nombreCliente = "";
-    this.dniCliente = "";
+    this.nombreCliente = '';
+    this.dniCliente = '';
   }
 
   RecuperarUsuario() {
@@ -233,30 +244,45 @@ export class CrearSolicitudComponent implements OnInit {
     let valorCorreo3 = this.registerForm.controls["correo3"].value;
     let valorFormatoSlip = this.registerForm.controls["tipoFormato"].value;
     let identificadorSlip = "SLIP-" + this.generarllaveDocumento();
-    this.slipGuardar = new Slip(identificadorSlip, new Date(), valorFechaRenovacion, valorTipoIdentificacionCliente, valorDniCliente, valorLabelCliente, valorTipoNegocio, valorEstado, valorTipoGestion, valorResponsable, valorCorreo, valorCorreo2, valorCorreo3, valorFormatoSlip, this.usuarioActual.id);
+    this.slipGuardar = new Slip(
+                        identificadorSlip,
+                        new Date(),
+                        valorFechaRenovacion,
+                        valorTipoIdentificacionCliente,
+                        valorDniCliente,
+                        valorLabelCliente,
+                        valorTipoNegocio,
+                        valorEstado,
+                        valorTipoGestion,
+                        valorResponsable,
+                        valorCorreo,
+                        valorCorreo2,
+                        valorCorreo3,
+                        valorFormatoSlip,
+                        this.usuarioActual.id);
 
-    if (valorLabelCliente == "") {
-      this.mostrarAlerta("Verifique el cliente", "Por favor verifique el nombre del cliente", template);
+    if (valorLabelCliente === '') {
+      this.mostrarAlerta('Verifique el cliente', 'Por favor verifique el nombre del cliente', template);
     } else {
       this.servicio.agregarSLIPinformacion(this.slipGuardar).then(
         (iar: ItemAddResult) => {
-          this.mostrarAlerta("Slip fue guardado", "El slip fue guardado con éxito, en breve le llegará una notificación", template);
+          this.mostrarAlerta('Slip fue guardado', 'El slip fue guardado con éxito, en breve le llegará una notificación', template);
           this.loading = false;
           this.router.navigate(['/mis-solicitudes']);
         }, err => {
           alert('Error en la creación del SLIP!!');
         }
-      )
+      );
     }
   }
 
   mostrarAlertaGuardado(template: TemplateRef<any>): any {
-    this.mostrarAlerta("Slip Guardado", "El slip fue guardado correctamente, lo puedes observar en mis solicitudes", template);
+    this.mostrarAlerta('Slip Guardado', 'El slip fue guardado correctamente, lo puedes observar en mis solicitudes', template);
   }
 
   generarllaveDocumento(): string {
-    var fecha = new Date();
-    var valorprimitivo = fecha.valueOf().toString();
+    const fecha = new Date();
+    const valorprimitivo = fecha.valueOf().toString();
     return valorprimitivo;
   }
 

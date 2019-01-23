@@ -99,7 +99,7 @@
         </div>
         <div class="col-sm-6">
           <div id="zonaEstado" [hidden]="!mostrarDivEstado" class="form-group">
-            <mat-radio-group class="example-radio-group" formControlName="rdbEstado">
+            <mat-radio-group class="example-radio-group" formControlName="rdbEstado" [ngClass]="{ 'is-invalid': submitted && f.rdbEstado.errors }">
               <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado.title">
                 {{estado.title}}
               </mat-radio-button>
