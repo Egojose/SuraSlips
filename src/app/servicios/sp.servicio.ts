@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
 import { default as pnp, CamlQuery } from 'sp-pnp-js';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 import { Slip } from '../dominio/slip';
 
 @Injectable()
